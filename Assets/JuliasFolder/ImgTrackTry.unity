@@ -194,10 +194,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 781791345}
-    - targetCorrespondingSourceObject: {fileID: 2512387469002778309, guid: 48cb3fb68c91eb94999fd99957eb0cae,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
 --- !u!1 &669551673
 GameObject:
@@ -265,7 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedLibrary: {fileID: 11400000, guid: 9ce3ddfbc7dbc49418c110116cdb45f7,
     type: 2}
-  m_MaxNumberOfMovingImages: 0
+  m_MaxNumberOfMovingImages: 1
   m_TrackedImagePrefab: {fileID: 613292779795284151, guid: ebd7292e888c84f05924605e51048072,
     type: 3}
 --- !u!1 &1353908115

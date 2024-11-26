@@ -16,7 +16,7 @@ public class LogToggle : MonoBehaviour
     // State to track if the panel is visible
     private bool isLogPanelVisible = false;
 
-    private void Start()
+    public void Start()
     {
         // Ensure the button is hooked up and the initial state is correct
         toggleButton.onClick.AddListener(ToggleLogPanel);

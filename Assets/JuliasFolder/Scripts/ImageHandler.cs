@@ -90,10 +90,19 @@ public class ImageHandler : MonoBehaviour
         {
             Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
             activePrefab = Instantiate(mapping.prefab, positionWithOffset, trackedImage.transform.rotation);
-            Debug.Log($"Prefab {activePrefab.name} instantiated for image: {trackedImage.referenceImage.name}");
-            
+            // Debug.Log($"Prefab {activePrefab.name} instantiated for image: {trackedImage.referenceImage.name}");
+
             //visual debug
             // Instantiate(debugPosMarking,positionWithOffset, trackedImage.transform.rotation);
+
+            // Animator animator = activePrefab.GetComponent<Animator>();
+            // if (animator != null)
+            // {
+            //     animator.Play("JumpOut");
+            //     Debug.Log($"Prefab {activePrefab.name} animated with openAnim");
+            // }
+            
+            
         }
     }
 
@@ -110,7 +119,7 @@ public class ImageHandler : MonoBehaviour
     {
         if (activePrefab != null)
         {
-            Debug.Log($"Destroying prefab: {activePrefab.name}");
+            // Debug.Log($"Destroying prefab: {activePrefab.name}");
             Destroy(activePrefab);
             activePrefab = null;
         }

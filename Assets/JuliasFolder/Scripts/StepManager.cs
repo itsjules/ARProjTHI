@@ -6,7 +6,6 @@ using UnityEngine;
 
 
 public enum StepID{
-        INITIAL_DETECTION,
         PRINTING_INSTRUCTIONS,
         PRINTED_CARD_INSTRUCTIONS,
         VALIDATION_INSTRUCTIONS,
@@ -38,7 +37,7 @@ public class StepManager : MonoBehaviour
 
 
     private void Start() {
-       currentStep=StepID.INITIAL_DETECTION;
+       currentStep=StepID.PRINTING_INSTRUCTIONS;
     }
 
     public void NextStep(){

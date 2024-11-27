@@ -99,17 +99,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Instructions</b>
-
-    8 tears
-
-    2 spoons of sugar
-
-    1 bowl
+  m_text: '<b>Now Validate your Card!</b>
 
 
-    cry
-    about the workload, chip your lips, mix it and exfoliate '
+    be carefull to do it only on or after
+    the first day of the semester, otherwise the NFC-chip might not work
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -172,7 +169,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -7.282889, z: -2.5378084, w: -7.0608344}
+  m_margin: {x: 0, y: -7.282889, z: -6.3124695, w: -7.0608344}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -192,7 +189,7 @@ GameObject:
   - component: {fileID: 5043962490583038361}
   - component: {fileID: 1476015674433265993}
   m_Layer: 0
-  m_Name: InstrPrefab_one
+  m_Name: InstrPrefab_ValidationKiosk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

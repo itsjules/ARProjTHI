@@ -1,7 +1,13 @@
+//Created by Julia Podlipensky
+//Instantiate the Instruction Prefabs on the according Images with predefined offsets
+//only instatiate one activePrefab
+
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using TMPro;
 
 public class ImageHandler : MonoBehaviour
 {
@@ -12,6 +18,8 @@ public class ImageHandler : MonoBehaviour
     private List<ReferencePrefabMapping> referencePrefabMappings;
 
     private Dictionary<string, ReferencePrefabMapping> prefabDictionary = new Dictionary<string, ReferencePrefabMapping>();
+    private List<string> imageOrder = new List<string>(); // Ordered list of image names (safely can make it work only over referencePrefabMappings)
+    private int nextImageIndex = 0;
 
     private GameObject activePrefab = null; // The current active prefab
     private ARTrackedImage currentTrackedImage = null; // The currently tracked image
@@ -19,12 +27,15 @@ public class ImageHandler : MonoBehaviour
     // [SerializeField]
     // private GameObject debugPosMarking;
 
+    [SerializeField]
+    private TMP_Text headerText;
+
     [Serializable]
     public struct ReferencePrefabMapping
     {
-        public string imageName; // Name of the reference image
-        public GameObject prefab; // Prefab associated with the image
-        public Vector3 offset; // Offset to apply to the prefab
+        public string imageName; 
+        public GameObject prefab; 
+        public Vector3 offset; 
     }
 
     private void Awake()
@@ -35,6 +46,7 @@ public class ImageHandler : MonoBehaviour
             if (!prefabDictionary.ContainsKey(mapping.imageName))
             {
                 prefabDictionary[mapping.imageName] = mapping;
+                imageOrder.Add(mapping.imageName);
             }
         }
     }
@@ -51,7 +63,7 @@ public class ImageHandler : MonoBehaviour
 
     private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
-        // Handle newly added or updated tracked images
+        // Handle newly added or updated tracked images (removed doesn't work and on my smartphone added part of the event also doesnt trigger, so fallback on doing everything in update)
         foreach (var trackedImage in eventArgs.added)
         {
             HandleTrackedImage(trackedImage);
@@ -76,13 +88,10 @@ public class ImageHandler : MonoBehaviour
             return;
         }
 
-        // If the image is different, switch to the new one
         Debug.Log($"Switching prefab to match image: {trackedImage.referenceImage.name}");
-
-        // Destroy the current prefab
+        
         DestroyActivePrefab();
 
-        // Set the new tracked image
         currentTrackedImage = trackedImage;
 
         // Instantiate the prefab for the new image
@@ -95,14 +104,10 @@ public class ImageHandler : MonoBehaviour
             //visual debug
             // Instantiate(debugPosMarking,positionWithOffset, trackedImage.transform.rotation);
 
-            // Animator animator = activePrefab.GetComponent<Animator>();
-            // if (animator != null)
-            // {
-            //     animator.Play("JumpOut");
-            //     Debug.Log($"Prefab {activePrefab.name} animated with openAnim");
-            // }
-            
-            
+            //update headerText on Canvas (will shift this to StepManager later)
+            nextImageIndex++;
+            UpdateHeaderText();
+
         }
     }
 
@@ -122,6 +127,19 @@ public class ImageHandler : MonoBehaviour
             // Debug.Log($"Destroying prefab: {activePrefab.name}");
             Destroy(activePrefab);
             activePrefab = null;
+        }
+    }
+
+    private void UpdateHeaderText()
+    {
+        if (nextImageIndex < imageOrder.Count)
+        {
+            string nextImageName = imageOrder[nextImageIndex];
+            headerText.text = $"You found the {currentTrackedImage.referenceImage.name}, follow the instructions<br><i><size=70%>after that find the {nextImageName}</i></size>";
+        }
+        else
+        {
+            headerText.text = "All steps completed! Well done! <br>Now lets play a game";
         }
     }
 }

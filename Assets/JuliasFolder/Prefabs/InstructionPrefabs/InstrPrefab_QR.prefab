@@ -99,17 +99,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Instructions</b>
-
-    1 cucumber
-
-    1 tomato
-
-    some cilantro
+  m_text: '<b>Your Student ID-Card</b>
 
 
-    cut
-    the tomato and cilantro and cucumber, mix them, eat some veggies'
+    let''s validate it / load money on it
+    to make it fully functional for your time at THI
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -172,7 +168,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -7.282889, z: 0, w: -7.0608344}
+  m_margin: {x: 0, y: -7.282889, z: -3.4322634, w: -7.0608344}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0

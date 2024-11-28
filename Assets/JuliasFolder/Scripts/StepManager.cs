@@ -32,7 +32,7 @@ public class StepManager : MonoBehaviour
     [Tooltip("The current Step in the AR Manual")]
     [SerializeField] public StepID currentStep;
     
-    //For events
+    //Sending step changed event
     public Action<int> OnStepChanged = delegate { };
 
 

@@ -99,13 +99,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Your Student ID-Card</b>
+  m_text: '<b>Your Student ID-Card/ FoodGame Start</b>
 
 
-    let''s validate it / load money on it
-    to make it fully functional for your time at THI
-
-'
+    Instruction when scanning
+    qr code either on card (bcs otherwise doesnt work with ARF) or table'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

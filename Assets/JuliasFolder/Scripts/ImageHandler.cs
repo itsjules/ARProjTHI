@@ -73,6 +73,11 @@ public class ImageHandler : MonoBehaviour
         {
             HandleTrackedImage(trackedImage);
         }
+        foreach (var trackedImage in eventArgs.removed)
+        {
+            Debug.Log("removed worked");
+        }
+
     }
 
     private void HandleTrackedImage(ARTrackedImage trackedImage)
@@ -82,13 +87,15 @@ public class ImageHandler : MonoBehaviour
             return;
 
         // If the image is already the currently tracked one, just update the prefab's transform
-        if (currentTrackedImage == trackedImage)
+        if (currentTrackedImage == trackedImage) // maybe an issue here so it doesnt return after this part 
         {
             UpdatePrefabTransform(trackedImage);
             return;
         }
 
-        //Debug.Log($"Switching prefab to match image: {trackedImage.referenceImage.name}");
+        //if a new image is detected
+
+        Debug.Log($"Switching prefab to match image: {trackedImage.referenceImage.name}");
         
         DestroyActivePrefab();
 
@@ -106,7 +113,7 @@ public class ImageHandler : MonoBehaviour
 
             //update headerText on Canvas (will shift this to StepManager later)
             nextImageIndex++;
-            // UpdateHeaderText();
+            UpdateHeaderText();
 
         }
     }
@@ -141,7 +148,5 @@ public class ImageHandler : MonoBehaviour
         {
             headerText.text = "All steps completed! Well done! <br>Now lets play a game";
         }
-
-        Debug.Log($"Change Header Text, repaint canvas");
     }
 }

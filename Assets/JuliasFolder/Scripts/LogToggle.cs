@@ -43,6 +43,6 @@ public class LogToggle : MonoBehaviour
         {
             buttonText.text = "Show Logs";  
         }
-        Debug.Log($"Change Button Labels, repaint canvas");
+        
     }
 }

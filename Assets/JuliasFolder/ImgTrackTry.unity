@@ -138,6 +138,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512387470528047737, guid: 48cb3fb68c91eb94999fd99957eb0cae,
         type: 3}
+      propertyPath: m_PlanePrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512387470528047737, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+        type: 3}
       propertyPath: m_DetectionMode
       value: 1
       objectReference: {fileID: 0}
@@ -198,7 +203,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 781791345}
+      addedObject: {fileID: 781791351}
   m_SourcePrefab: {fileID: 100100000, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
 --- !u!1 &279222173
 GameObject:
@@ -438,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c301f6d5cdd2114dbfc53d1742a94a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedImageManager: {fileID: 781791345}
+  m_TrackedImageManager: {fileID: 781791351}
   referencePrefabMappings:
   - imageName: PrintKiosk
     prefab: {fileID: 5871100817934356348, guid: cddfa57dc690cf44eba3f2ec63a2c3e0,
@@ -670,7 +675,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 207634323}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &781791345
+--- !u!114 &781791351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

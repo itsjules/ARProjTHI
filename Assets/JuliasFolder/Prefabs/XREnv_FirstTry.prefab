@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 7581938995479052780}
   - component: {fileID: 1593630560843719382}
   m_Layer: 31
-  m_Name: Simulated Tracked Image (2)
+  m_Name: Simulated Tracked Image Validate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,7 +275,7 @@ Transform:
   m_GameObject: {fileID: 1017209701099346980}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6.099, y: 0.5, z: 0.813}
+  m_LocalPosition: {x: 2.8, y: 0.5, z: 0.813}
   m_LocalScale: {x: 0.5, y: 0.01, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39bb24e2bd7a482ca08117fb44b8e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Image: {fileID: 2800000, guid: d1879707d69d24adfb421bde69c92c94, type: 3}
+  m_Image: {fileID: 2800000, guid: 79df319454b3100409e455369a44a97a, type: 3}
   m_ImagePhysicalSizeMeters: {x: 0.5, y: 0.5}
 --- !u!1 &1221533722420746465
 GameObject:
@@ -358,7 +358,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3b09f283d528c1547ad65949f029c121, type: 2}
+  - {fileID: 2100000, guid: 7d4e66c45301b074f9be92428bf83c8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 4871933472208370357}
   - component: {fileID: 8729761494021084126}
   m_Layer: 31
-  m_Name: Simulated Tracked Image (3)
+  m_Name: Simulated Tracked Image Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,8 +405,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2755767185933152182}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 8.81, y: 0.5, z: 0.813}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 5.85, y: 0.5, z: 0.813}
   m_LocalScale: {x: 0.5, y: 0.01, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39bb24e2bd7a482ca08117fb44b8e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Image: {fileID: 2800000, guid: 038b8a7b4862745aaadfd7c9f14e7bbd, type: 3}
+  m_Image: {fileID: 2800000, guid: 81b06ddb310f72446a48f0a37eacb40f, type: 3}
   m_ImagePhysicalSizeMeters: {x: 0.5, y: 0.5}
 --- !u!1 &3475735057603037936
 GameObject:
@@ -558,7 +558,7 @@ GameObject:
   - component: {fileID: 8687952604547441517}
   - component: {fileID: 7027700216025616306}
   m_Layer: 31
-  m_Name: Simulated Tracked Image
+  m_Name: Simulated Tracked Image Print
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -623,7 +623,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.67, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.26, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4871933472208370357}
@@ -656,7 +656,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1b4d51a3c90019343b8aba32d6aaf9b1, type: 2}
+  - {fileID: 2100000, guid: fdebb145ecc2a78458f15b8ab34419ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 5136972643219917847}
   - component: {fileID: 288648319746190552}
   m_Layer: 31
-  m_Name: Simulated Tracked Image (1)
+  m_Name: Simulated Tracked Image final QR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -704,7 +704,7 @@ Transform:
   m_GameObject: {fileID: 4784584580419930860}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.884, y: 0.5, z: 0.813}
+  m_LocalPosition: {x: 9.36, y: 0.5, z: 0.813}
   m_LocalScale: {x: 0.5, y: 0.01, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1224,9 +1224,9 @@ Transform:
   - {fileID: 5911072156897761180}
   - {fileID: 4744334345910528120}
   - {fileID: 8687952604547441517}
-  - {fileID: 5136972643219917847}
   - {fileID: 7581938995479052780}
   - {fileID: 4871933472208370357}
+  - {fileID: 5136972643219917847}
   - {fileID: 5283108358406351049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1244,7 +1244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CameraStartingPose:
     position: {x: 0.22, y: 0.9345944, z: -0.21}
-    rotation: {x: -0.16794881, y: 0.414527, z: -0.078137435, w: -0.8909855}
+    rotation: {x: -0.046911478, y: 0.9506586, z: -0.17919792, w: -0.24886867}
   m_CameraMovementBounds:
     m_Center: {x: 0.044999838, y: 0.545, z: 0.00000011920929}
     m_Extent: {x: 12.69, y: 0.5500002, z: 1.2500005}

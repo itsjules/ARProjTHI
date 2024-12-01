@@ -136,6 +136,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Origin (AR Rig)
       objectReference: {fileID: 0}
+    - target: {fileID: 2512387470528047737, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+        type: 3}
+      propertyPath: m_DetectionMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2512387470528047738, guid: 48cb3fb68c91eb94999fd99957eb0cae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -287,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &539119586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -304,7 +309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 17.339966, y: -16.78003}
+  m_AnchoredPosition: {x: 17.339966, y: -92}
   m_SizeDelta: {x: -314.68002, y: 25}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &539119587
@@ -327,7 +332,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Please scan Image X
+  m_text: Find the PrintKiosk!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -354,8 +359,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 61.68
+  m_fontSizeBase: 61.68
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -435,22 +440,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedImageManager: {fileID: 781791345}
   referencePrefabMappings:
-  - imageName: KioskID
+  - imageName: PrintKiosk
     prefab: {fileID: 5871100817934356348, guid: cddfa57dc690cf44eba3f2ec63a2c3e0,
       type: 3}
-    offset: {x: -0.5, y: 0, z: 0}
-  - imageName: QR
-    prefab: {fileID: 5871100817934356348, guid: 3e09b30c18d9afd40beaaec3e6824079,
-      type: 3}
-    offset: {x: 0, y: 0.5, z: 0}
-  - imageName: one
+    offset: {x: -0.2, y: 0.3, z: 0}
+  - imageName: ValidationKiosk
     prefab: {fileID: 5871100817934356348, guid: a4b55b1f8e85c4242b3fa61cb5cfad7a,
       type: 3}
-    offset: {x: 0, y: -0.5, z: 0}
-  - imageName: two
+    offset: {x: 0.3, y: 0.3, z: 0}
+  - imageName: MoneyKiosk
     prefab: {fileID: 5871100817934356348, guid: 4343981bcf6452140a68e6be47b288ca,
       type: 3}
-    offset: {x: 1, y: 0, z: 0}
+    offset: {x: 0.1, y: 0, z: 0}
+  - imageName: finalQR
+    prefab: {fileID: 5871100817934356348, guid: 3e09b30c18d9afd40beaaec3e6824079,
+      type: 3}
+    offset: {x: 0, y: 0.3, z: 0}
+  headerText: {fileID: 539119587}
 --- !u!4 &573751689
 Transform:
   m_ObjectHideFlags: 0
@@ -1191,11 +1197,11 @@ RectTransform:
   - {fileID: 1837598398}
   m_Father: {fileID: 1254570807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20.68, y: -90.73999}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 13.619995, y: 21.49}
   m_SizeDelta: {x: 170, y: 52.5}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1607851905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,7 +1215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1314,51 +1320,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1756870208
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1756870210}
-  - component: {fileID: 1756870211}
-  m_Layer: 0
-  m_Name: TrackedImgInfo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1756870210
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756870208}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1756870211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756870208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ce408e98739594f8689e64b17258ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedImageManager: {fileID: 781791345}
 --- !u!1 &1837598395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,7 +1358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: DebugLog
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1406,8 +1367,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1506,7 +1467,7 @@ GameObject:
   - component: {fileID: 1868053438}
   - component: {fileID: 1868053437}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StepButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1521,16 +1482,16 @@ RectTransform:
   m_GameObject: {fileID: 1868053435}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.89, y: 1.89, z: 1.89}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1076169162}
   m_Father: {fileID: 1254570807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -15.299988, y: 16.099976}
-  m_SizeDelta: {x: 165.9, y: 49.89}
+  m_AnchoredPosition: {x: -11.82, y: 20.789978}
+  m_SizeDelta: {x: 165.9, y: 49.890015}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1868053437
 MonoBehaviour:
@@ -1995,7 +1956,7 @@ MonoBehaviour:
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 1098221374}
-  m_HorizontalScrollbar: {fileID: 0}
+  m_HorizontalScrollbar: {fileID: 1985191576}
   m_VerticalScrollbar: {fileID: 1985191576}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
@@ -2050,7 +2011,6 @@ SceneRoots:
   - {fileID: 1954572885}
   - {fileID: 669551675}
   - {fileID: 207634323}
-  - {fileID: 1756870210}
   - {fileID: 576271623}
   - {fileID: 573751689}
   - {fileID: 1254570807}

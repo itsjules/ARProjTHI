@@ -1,159 +1,152 @@
+//Created by Julia Podlipensky
+//Instantiate the Instruction Prefabs on the according Images with predefined offsets
+//only instatiate one activePrefab
+
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using TMPro;
 
 public class ImageHandler : MonoBehaviour
 {
     [SerializeField]
-    ARTrackedImageManager m_TrackedImageManager;
+    private ARTrackedImageManager m_TrackedImageManager;
 
-    // A dictionary to map reference image names to prefabs and offsets.
     [SerializeField]
     private List<ReferencePrefabMapping> referencePrefabMappings;
 
     private Dictionary<string, ReferencePrefabMapping> prefabDictionary = new Dictionary<string, ReferencePrefabMapping>();
+    private List<string> imageOrder = new List<string>(); // Ordered list of image names (safely can make it work only over referencePrefabMappings)
+    private int nextImageIndex = 0;
 
-    //-------------------Old code before activePrefab--------------------------
-    //private Dictionary<Guid, GameObject> instantiatedPrefabs = new Dictionary<Guid, GameObject>();
-    private GameObject activePrefab = null; // Only one active prefab at a time
+    private GameObject activePrefab = null; // The current active prefab
+    private ARTrackedImage currentTrackedImage = null; // The currently tracked image
+
+    // [SerializeField]
+    // private GameObject debugPosMarking;
+
+    [SerializeField]
+    private TMP_Text headerText;
 
     [Serializable]
     public struct ReferencePrefabMapping
     {
-        public string imageName; // exact name of the refimage
-        public GameObject prefab; // Prefab associated with the image
-        public Vector3 offset; // Offset to apply to the prefab
+        public string imageName; 
+        public GameObject prefab; 
+        public Vector3 offset; 
     }
-    public static ImageHandler Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-            Destroy(gameObject);
-
         // Initialize the prefab dictionary
         foreach (var mapping in referencePrefabMappings)
         {
-            // Debug.Log($"Mapping: {mapping.imageName} -> {mapping.prefab.name}");
             if (!prefabDictionary.ContainsKey(mapping.imageName))
             {
                 prefabDictionary[mapping.imageName] = mapping;
+                imageOrder.Add(mapping.imageName);
             }
         }
     }
 
-    void OnEnable() => m_TrackedImageManager.trackedImagesChanged += OnChanged;
-
-    void OnDisable() => m_TrackedImageManager.trackedImagesChanged -= OnChanged;
-
-    void OnChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    private void OnEnable()
     {
-        foreach (ARTrackedImage trackedImage in eventArgs.added)
+        m_TrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+    }
+
+    private void OnDisable()
+    {
+        m_TrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+    }
+
+    private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    {
+        // Handle newly added or updated tracked images (removed doesn't work and on my smartphone added part of the event also doesnt trigger, so fallback on doing everything in update)
+        foreach (var trackedImage in eventArgs.added)
         {
-            //-------------------Old code before activePrefab--------------------------
-
-            // string imageName = trackedImage.referenceImage.name;
-
-            // // Check if the reference image has a corresponding prefab
-            // if (prefabDictionary.TryGetValue(imageName, out ReferencePrefabMapping mapping) && 
-            //     !instantiatedPrefabs.ContainsKey(trackedImage.referenceImage.guid))
-            // {
-            //     // Instantiate the prefab with an offset
-            //     Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
-
-            //     // //test the offset problem
-            //     // GameObject instantiatedPrefab = Instantiate(mapping.prefab, trackedImage.transform.position, trackedImage.transform.rotation);
-            //     // Debug.Log($"Tracked Image {imageName} Center Position: {trackedImage.transform.position}");
-
-            //     //right one with the offset
-            //     GameObject instantiatedPrefab = Instantiate(mapping.prefab, positionWithOffset, trackedImage.transform.rotation);
-
-            //     instantiatedPrefabs[trackedImage.referenceImage.guid] = instantiatedPrefab;
-            // }
-
-            if (trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
-            {
-                DestroyActivePrefab(); // Clear existing prefab
-                // Debug.Log($"Added: {trackedImage.referenceImage.name}");
-
-                if (prefabDictionary.TryGetValue(trackedImage.referenceImage.name, out ReferencePrefabMapping mapping))
-                {
-                    Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
-                    activePrefab = Instantiate(mapping.prefab, positionWithOffset, trackedImage.transform.rotation);
-                    Debug.Log($"Prefab {activePrefab.name} instantiated for image: {trackedImage.referenceImage.name}");
-                }
-            }
+            HandleTrackedImage(trackedImage);
         }
 
-        foreach (ARTrackedImage trackedImage in eventArgs.updated)
+        foreach (var trackedImage in eventArgs.updated)
         {
-            //-------------------Old code before activePrefab--------------------------
-            // if (instantiatedPrefabs.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab))
-            // {
-            //     // Update position with the specific offset
-            //     if (prefabDictionary.TryGetValue(trackedImage.referenceImage.name, out ReferencePrefabMapping mapping))
-            //     {
-            //         prefab.transform.position = trackedImage.transform.position+ mapping.offset;
-            //         prefab.transform.rotation = trackedImage.transform.rotation;
-            //     }
-            // }
-
-            if (trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking && 
-            prefabDictionary.TryGetValue(trackedImage.referenceImage.name, out ReferencePrefabMapping mapping))
-        {
-            if (activePrefab != null)
-            {
-                activePrefab.transform.position = trackedImage.transform.position + mapping.offset;
-                activePrefab.transform.rotation = trackedImage.transform.rotation;
-            }
-            Debug.Log($"Updated Image: {trackedImage.referenceImage.name}, Tracking State: {trackedImage.trackingState}");
+            HandleTrackedImage(trackedImage);
         }
+        foreach (var trackedImage in eventArgs.removed)
+        {
+            Debug.Log("removed worked");
         }
 
-        foreach (ARTrackedImage trackedImage in eventArgs.removed)
+    }
+
+    private void HandleTrackedImage(ARTrackedImage trackedImage)
+    {
+        // Ignore images that are not actively tracked
+        if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
+            return;
+
+        // If the image is already the currently tracked one, just update the prefab's transform
+        if (currentTrackedImage == trackedImage) // maybe an issue here so it doesnt return after this part 
         {
-            //-------------------Old code before activePrefab--------------------------
-            // if (instantiatedPrefabs.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab))
-            // {
-            //     Destroy(prefab);
-            //     instantiatedPrefabs.Remove(trackedImage.referenceImage.guid);
-            // }
-
-            // if (activePrefab != null && prefabDictionary.TryGetValue(trackedImage.referenceImage.name, out ReferencePrefabMapping mapping))
-            // {
-            //     // Destroy the active prefab if it corresponds to the removed image
-            //     DestroyActivePrefab();
-
-
-            // }
-            Debug.Log($"Removed: {trackedImage.referenceImage.name}");
-            DestroyActivePrefab();
-
-
+            UpdatePrefabTransform(trackedImage);
+            return;
         }
 
-        // // cleanup if no tracked images are left
-        // if (m_TrackedImageManager.trackables.count == 0)
-        // {
-        //     DestroyActivePrefab();
-        // }
+        //if a new image is detected
 
+        Debug.Log($"Switching prefab to match image: {trackedImage.referenceImage.name}");
+        
+        DestroyActivePrefab();
 
+        currentTrackedImage = trackedImage;
+
+        // Instantiate the prefab for the new image
+        if (prefabDictionary.TryGetValue(trackedImage.referenceImage.name, out ReferencePrefabMapping mapping))
+        {
+            Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
+            activePrefab = Instantiate(mapping.prefab, positionWithOffset, trackedImage.transform.rotation);
+            // Debug.Log($"Prefab {activePrefab.name} instantiated for image: {trackedImage.referenceImage.name}");
+
+            //visual debug
+            // Instantiate(debugPosMarking,positionWithOffset, trackedImage.transform.rotation);
+
+            //update headerText on Canvas (will shift this to StepManager later)
+            nextImageIndex++;
+            UpdateHeaderText();
+
+        }
+    }
+
+    private void UpdatePrefabTransform(ARTrackedImage trackedImage)
+    {
+        if (activePrefab != null && prefabDictionary.TryGetValue(trackedImage.referenceImage.name, out ReferencePrefabMapping mapping))
+        {
+            activePrefab.transform.position = trackedImage.transform.position + mapping.offset;
+            activePrefab.transform.rotation = trackedImage.transform.rotation;
+        }
     }
 
     private void DestroyActivePrefab()
     {
         if (activePrefab != null)
         {
+            // Debug.Log($"Destroying prefab: {activePrefab.name}");
             Destroy(activePrefab);
             activePrefab = null;
+        }
+    }
+
+    private void UpdateHeaderText()
+    {
+        if (nextImageIndex < imageOrder.Count)
+        {
+            string nextImageName = imageOrder[nextImageIndex];
+            headerText.text = $"You found the {currentTrackedImage.referenceImage.name}, follow the instructions<br><i><size=70%>after that find the {nextImageName}</i></size>";
+        }
+        else
+        {
+            headerText.text = "All steps completed! Well done! <br>Now lets play a game";
         }
     }
 }

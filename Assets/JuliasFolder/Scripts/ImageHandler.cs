@@ -54,10 +54,16 @@ public class ImageHandler : MonoBehaviour
     private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
         // Debug.Log(eventArgs);
-        
+        if (ARSession.state != ARSessionState.SessionTracking)
+        {
+            Debug.Log($"ARSession is not in a tracking state. Current state: {ARSession.state}");
+            return;
+        }
+
         foreach (var trackedImage in eventArgs.added)
         {
             Debug.Log($"eventArgs.added for refImage: {trackedImage.referenceImage.name }");
+            Debug.Log($"Tracking state: {trackedImage.trackingState} of image {trackedImage.referenceImage.name}");
             HandleTrackedImage(trackedImage);
         }
 
@@ -77,23 +83,29 @@ public class ImageHandler : MonoBehaviour
     private void HandleTrackedImage(ARTrackedImage trackedImage)
     {
         // Ignore images that are not actively tracking
-        if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
+        if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking){
+            Debug.Log($"tracking state: {trackedImage.trackingState} of image {trackedImage.referenceImage.name}");
             return;
-
+        }
         // Check if this image already has an instantiated prefab
-        if (instantiatedPrefabs.ContainsKey(trackedImage.referenceImage.name))
+        if (instantiatedPrefabs.ContainsKey(trackedImage.referenceImage.name)){
             return;
-
+        }
         // Find the matching prefab mapping
         var mapping = referencePrefabMappings.Find(m => m.imageName == trackedImage.referenceImage.name);
+
+        Debug.Log($"maping prefab = {mapping.prefab}");
+
         if (mapping.prefab != null)
         {
+            Debug.Log(mapping.prefab);
             // Calculate position with offset
             Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
 
             // Instantiate the prefab
             GameObject newPrefab = Instantiate(mapping.prefab, positionWithOffset, trackedImage.transform.rotation);
 
+            Debug.Log("prefab instantiated");
             // Store the instantiated prefab
             instantiatedPrefabs[trackedImage.referenceImage.name] = newPrefab;
 
@@ -129,6 +141,7 @@ public class ImageHandler : MonoBehaviour
     private void UpdateHeaderText(ARTrackedImage trackedImage)
     {
         nextImageIndex++;
+        
 
         if (nextImageIndex < imageOrder.Count)
         {
@@ -139,5 +152,9 @@ public class ImageHandler : MonoBehaviour
         {
             headerText.text = "All steps completed! Well done! <br>Now lets play a game";
         }
+
+        Debug.Log("header changed");
     }
+
+
 }

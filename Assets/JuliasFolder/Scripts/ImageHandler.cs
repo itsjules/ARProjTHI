@@ -82,11 +82,11 @@ public class ImageHandler : MonoBehaviour
 
     private void HandleTrackedImage(ARTrackedImage trackedImage)
     {
-        // Ignore images that are not actively tracking
-        if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking){
-            Debug.Log($"tracking state: {trackedImage.trackingState} of image {trackedImage.referenceImage.name}");
-            return;
-        }
+        // Ignore images that are not actively tracking (not working on mobile build as tracking state is displayed as none, even if images are detected)
+        // if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking){
+        //     Debug.Log($"tracking state: {trackedImage.trackingState} of image {trackedImage.referenceImage.name}");
+        //     return;
+        // }
         // Check if this image already has an instantiated prefab
         if (instantiatedPrefabs.ContainsKey(trackedImage.referenceImage.name)){
             return;

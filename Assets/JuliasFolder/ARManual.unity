@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 11400000, guid: c036509533ec8e54b93403e8e4f28c04,
+  m_SerializedLibrary: {fileID: 11400000, guid: 9ce3ddfbc7dbc49418c110116cdb45f7,
     type: 2}
   m_MaxNumberOfMovingImages: 1
   m_TrackedImagePrefab: {fileID: 7576867131100388943, guid: 515c20e4e88ea92498f86c48c647ec9f,

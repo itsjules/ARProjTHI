@@ -36,11 +36,11 @@ public class ImageTrackingManager : MonoBehaviour
                 SceneManager.LoadScene("Introduction"); // Szene wechseln
             }
             //Übergang to AR Manual
-            if (trackedImage.referenceImage.name == "print_kiosk") // Der Name des Bildes aus der XR Reference Image Library
-            {
-                UnityEngine.Debug.Log("Bild erfolgreich getrackt! Wechsel zur Szene ImgTrackTry.");
-                SceneManager.LoadScene("ImgTrackTry"); // Szene wechseln
-            }
+            // if (trackedImage.referenceImage.name == "print_kiosk") // Der Name des Bildes aus der XR Reference Image Library
+            // {
+            //     UnityEngine.Debug.Log("Bild erfolgreich getrackt! Wechsel zur Szene ImgTrackTry.");
+            //     SceneManager.LoadScene("ImgTrackTry"); // Szene wechseln
+            // }
         }
     }
 }

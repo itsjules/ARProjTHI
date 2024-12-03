@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.XR.ARCore;
 
 public class ImagePrefabHandler : MonoBehaviour
 {
@@ -20,13 +21,16 @@ public class ImagePrefabHandler : MonoBehaviour
 
     private void Awake()
     {
+        
         trackedImageManager = GetComponent<ARTrackedImageManager>();
     }
+
 
     private void OnEnable()
     {
         if (trackedImageManager != null)
         {
+            currentTrackedPrefab=null;
             trackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
         }
         else

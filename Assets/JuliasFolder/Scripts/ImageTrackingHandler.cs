@@ -30,7 +30,10 @@ public class ImageTrackingHandler : MonoBehaviour
 
     private void Awake()
     {
+        
+        
         trackedImageManager = GetComponent<ARTrackedImageManager>();
+        
 
         // Initialize the image order list
         foreach (var mapping in referencePrefabMappings)

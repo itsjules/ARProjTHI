@@ -8,4 +8,12 @@ public class SceneLoadManager: MonoBehaviour
     {
         SceneManager.LoadScene("ValidationStep");
     }
+    public void LoadChargingScene()
+    {
+        SceneManager.LoadScene("ChargingStep");
+    }
+    public void LoadQRHintScene()
+    {
+        SceneManager.LoadScene("FinalQRStep");
+    }
 }

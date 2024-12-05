@@ -18,6 +18,10 @@ public class ImagePrefabHandler : MonoBehaviour
 
     [SerializeField]
     private Button continueBttn; // Button to activate
+    [SerializeField]
+    private Canvas hintCanvas; // Button to activate
+
+
 
     private void Awake()
     {
@@ -78,6 +82,12 @@ public class ImagePrefabHandler : MonoBehaviour
             Vector3 positionWithOffset = trackedImage.transform.position + prefabOffset;
             currentTrackedPrefab = Instantiate(instructionPrefab, positionWithOffset, trackedImage.transform.rotation);
 
+            // Disable hint Canvas if assigned
+            if (hintCanvas!=null)
+            {
+                hintCanvas.gameObject.SetActive(false);
+            }
+            
             // Enable continue button if assigned
             if (continueBttn != null)
             {

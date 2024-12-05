@@ -1415,6 +1415,7 @@ MonoBehaviour:
     type: 3}
   prefabOffset: {x: 0, y: 0, z: 0}
   continueBttn: {fileID: 1934799871}
+  hintCanvas: {fileID: 259359515}
 --- !u!1 &1601836759
 GameObject:
   m_ObjectHideFlags: 0

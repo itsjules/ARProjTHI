@@ -6,6 +6,6 @@ public class SceneLoader02 : MonoBehaviour
 {
     public void LoadScene()
     {
-        SceneManager.LoadScene("MiniGame2AR");
+        SceneManager.LoadScene("PrintStep");
     }
 }

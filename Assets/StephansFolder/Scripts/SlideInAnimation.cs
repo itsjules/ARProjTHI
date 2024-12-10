@@ -3,7 +3,7 @@ using UnityEngine;
 public class SlideInAnimation : MonoBehaviour
 {
     public RectTransform targetUI; // Das UI-Element, das animiert werden soll
-    public Vector2 startPosition; // Startposition der Animation (auï¿½erhalb des Bildschirms)
+    public Vector2 startPosition; // Startposition der Animation (außerhalb des Bildschirms)
     public Vector2 endPosition; // Zielposition der Animation (sichtbar im Canvas)
     public float duration = 1.0f; // Dauer der Animation in Sekunden
 
@@ -33,7 +33,7 @@ public class SlideInAnimation : MonoBehaviour
             // Setze die interpolierte Position
             targetUI.anchoredPosition = Vector2.Lerp(startPosition, endPosition, t);
 
-            yield return null; // Warte bis zum nï¿½chsten Frame
+            yield return null; // Warte bis zum nächsten Frame
         }
 
         // Stelle sicher, dass die Zielposition exakt erreicht wird

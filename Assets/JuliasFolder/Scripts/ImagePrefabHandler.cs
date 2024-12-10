@@ -44,6 +44,7 @@ public class ImagePrefabHandler : MonoBehaviour
             currentTrackedPrefab=null;
             trackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
             currentScene=SceneManager.GetActiveScene();
+            
         }
         else
         {
@@ -63,6 +64,7 @@ public class ImagePrefabHandler : MonoBehaviour
 
     private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs args)
     {
+        debugText.text=$"currentPrefab is: {currentTrackedPrefab}";
         // Handle added images
         foreach (var trackedImage in args.added)
         {

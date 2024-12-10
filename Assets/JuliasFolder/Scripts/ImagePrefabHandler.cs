@@ -21,13 +21,20 @@ public class ImagePrefabHandler : MonoBehaviour
     [SerializeField]
     private Canvas hintCanvas; // Button to activate
 
+    private Scene currentScene; //scene this component is working in
+
+    [SerializeField]
+    private Text debugText;//debug Text 
 
 
     private void Awake()
     {
         
         trackedImageManager = GetComponent<ARTrackedImageManager>();
+        currentTrackedPrefab=null;
     }
+
+    
 
 
     private void OnEnable()
@@ -36,6 +43,7 @@ public class ImagePrefabHandler : MonoBehaviour
         {
             currentTrackedPrefab=null;
             trackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+            currentScene=SceneManager.GetActiveScene();
         }
         else
         {
@@ -47,6 +55,8 @@ public class ImagePrefabHandler : MonoBehaviour
     {
         if (trackedImageManager != null)
         {
+            // Destroy(currentTrackedPrefab);
+            // currentTrackedPrefab=null;
             trackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
         }
     }
@@ -56,7 +66,18 @@ public class ImagePrefabHandler : MonoBehaviour
         // Handle added images
         foreach (var trackedImage in args.added)
         {
-            HandleTrackedImage(trackedImage);
+            if (trackedImage.referenceImage.name=="PrintKiosk" && currentScene.name=="PrintStep"){
+                HandleTrackedImage(trackedImage);
+            }
+            if (trackedImage.referenceImage.name=="ValidationKiosk" && currentScene.name=="ValidationStep"){
+                HandleTrackedImage(trackedImage);
+            }
+            if (trackedImage.referenceImage.name=="MoneyKiosk" && currentScene.name=="ChargingStep"){
+                HandleTrackedImage(trackedImage);
+            }
+             if (trackedImage.referenceImage.name=="finalQR" && currentScene.name=="FinalQRStep"){
+                HandleTrackedImage(trackedImage);
+            }
         }
 
         // Handle updated images
@@ -81,6 +102,8 @@ public class ImagePrefabHandler : MonoBehaviour
             // Instantiate prefab at tracked image position with offset
             Vector3 positionWithOffset = trackedImage.transform.position + prefabOffset;
             currentTrackedPrefab = Instantiate(instructionPrefab, positionWithOffset, trackedImage.transform.rotation);
+
+            debugText.text=$"currentPrefab is: {currentTrackedPrefab}";
 
             // Disable hint Canvas if assigned
             if (hintCanvas!=null)
@@ -109,7 +132,8 @@ public class ImagePrefabHandler : MonoBehaviour
             currentTrackedPrefab.transform.rotation = trackedImage.transform.rotation;
 
             // Ensure the prefab is active only when tracking
-            currentTrackedPrefab.SetActive(trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking);
+            //currentTrackedPrefab.SetActive(trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking);
+            currentTrackedPrefab.SetActive(true);
         }
     }
 

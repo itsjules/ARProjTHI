@@ -7,6 +7,7 @@ using System;
 
 public class ImageTrackingHandler : MonoBehaviour
 {
+    [SerializeField]
     private ARTrackedImageManager trackedImageManager;
 
     [SerializeField]
@@ -30,11 +31,6 @@ public class ImageTrackingHandler : MonoBehaviour
 
     private void Awake()
     {
-        
-        
-        trackedImageManager = GetComponent<ARTrackedImageManager>();
-        
-
         // Initialize the image order list
         foreach (var mapping in referencePrefabMappings)
         {
@@ -97,7 +93,7 @@ public class ImageTrackingHandler : MonoBehaviour
             instantiatedPrefabs[trackedImage.referenceImage.name] = newPrefab;
 
             // Update header text
-            // UpdateHeaderText(trackedImage);
+            UpdateHeaderText(trackedImage);
         }
     }
 

@@ -13,16 +13,16 @@ public class QuizManager : MonoBehaviour
         public int CorrectAnswerIndex; // Index der richtigen Antwort
     }
 
-    public UnityEngine.UI.Text QuestionText; // Verknüpfen mit QuestionText im Canvas
-    public Button[] AnswerButtons; // Verknüpfen mit BtnAnswerA-D
-    public UnityEngine.UI.Text[] AnswerTexts; // Verknüpfen mit AnswerTextA-D
-    public Button NextQuestionButton; // Verknüpfen mit Btn_NextQuestion
-    public UnityEngine.UI.Text ResultText; // Verknüpfen mit ResultText
-    public Button ContinueButton; // Verknüpfen mit Btn_Continue
+    public UnityEngine.UI.Text QuestionText; // Verkn?pfen mit QuestionText im Canvas
+    public Button[] AnswerButtons; // Verkn?pfen mit BtnAnswerA-D
+    public UnityEngine.UI.Text[] AnswerTexts; // Verkn?pfen mit AnswerTextA-D
+    public Button NextQuestionButton; // Verkn?pfen mit Btn_NextQuestion
+    public UnityEngine.UI.Text ResultText; // Verkn?pfen mit ResultText
+    public Button ContinueButton; // Verkn?pfen mit Btn_Continue
 
-    // Felder für Sprites
-    public Sprite CorrectAnswerSprite; // Sprite für richtige Antwort
-    public Sprite WrongAnswerSprite; // Sprite für falsche Antwort
+    // Felder f?r Sprites
+    public Sprite CorrectAnswerSprite; // Sprite f?r richtige Antwort
+    public Sprite WrongAnswerSprite; // Sprite f?r falsche Antwort
     public Sprite DefaultButtonSprite; // Standard-Button-Sprite
 
     public List<Question> Questions = new List<Question>(); // Liste der Fragen
@@ -61,9 +61,9 @@ public class QuizManager : MonoBehaviour
             {
                 AnswerTexts[i].text = currentQuestion.Answers[i];
                 AnswerButtons[i].interactable = true; // Buttons aktivieren
-                AnswerButtons[i].GetComponent<UnityEngine.UI.Image>().sprite = DefaultButtonSprite; // Sprite zurücksetzen
+                AnswerButtons[i].GetComponent<UnityEngine.UI.Image>().sprite = DefaultButtonSprite; // Sprite zur?cksetzen
                 AnswerButtons[i].gameObject.SetActive(true); // Buttons sichtbar machen
-                AnswerButtons[i].transform.localScale = Vector3.one; // Skalierung zurücksetzen
+                AnswerButtons[i].transform.localScale = Vector3.one; // Skalierung zur?cksetzen
             }
 
             QuestionText.gameObject.SetActive(true); // Frage-Text sichtbar machen
@@ -93,7 +93,7 @@ public class QuizManager : MonoBehaviour
         {
             selectedButton.GetComponent<UnityEngine.UI.Image>().sprite = WrongAnswerSprite; // Falsches Sprite setzen
             AnswerButtons[currentQuestion.CorrectAnswerIndex].GetComponent<UnityEngine.UI.Image>().sprite = CorrectAnswerSprite; // Richtiges Sprite hervorheben
-            StartCoroutine(BounceButton(AnswerButtons[currentQuestion.CorrectAnswerIndex].transform)); // Bounce-Effekt für richtigen Button starten
+            StartCoroutine(BounceButton(AnswerButtons[currentQuestion.CorrectAnswerIndex].transform)); // Bounce-Effekt f?r richtigen Button starten
         }
 
         foreach (Button button in AnswerButtons)
@@ -106,7 +106,7 @@ public class QuizManager : MonoBehaviour
 
     private IEnumerator BounceButton(Transform buttonTransform)
     {
-        // Originalgröße speichern
+        // Originalgr??e speichern
         Vector3 originalScale = buttonTransform.localScale;
 
         // Auf 102% skalieren
@@ -114,8 +114,8 @@ public class QuizManager : MonoBehaviour
         // Auf 98% skalieren
         Vector3 scaleDown = originalScale * 0.98f;
 
-        // Animation ausführen
-        float duration = 0.1f; // Dauer für eine Animation
+        // Animation ausf?hren
+        float duration = 0.1f; // Dauer f?r eine Animation
         for (int i = 0; i < 1; i++) // 2 Bounces
         {
             // Hoch skalieren
@@ -123,7 +123,7 @@ public class QuizManager : MonoBehaviour
             // Runter skalieren
             yield return ScaleOverTime(buttonTransform, scaleDown, duration);
         }
-        // Zurück zur Originalgröße
+        // Zur?ck zur Originalgr??e
         yield return ScaleOverTime(buttonTransform, originalScale, duration);
     }
 
@@ -139,7 +139,7 @@ public class QuizManager : MonoBehaviour
             yield return null;
         }
 
-        target.localScale = targetScale; // Endgültige Skalierung setzen
+        target.localScale = targetScale; // Endg?ltige Skalierung setzen
     }
 
     private void ShowNextQuestion()
@@ -165,7 +165,7 @@ public class QuizManager : MonoBehaviour
 
         // Ergebnis-Text und Continue-Button anzeigen
         ResultText.gameObject.SetActive(true);
-        ResultText.text = "Herzlichen Glückwunsch! Du hast das Quiz abgeschlossen.";
+        ResultText.text = "Congratulations! Now you should know a lot of interesting facts.";
         ContinueButton.gameObject.SetActive(true);
     }
 

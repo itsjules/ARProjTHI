@@ -23,11 +23,8 @@ public class ImageTrackingManager : MonoBehaviour
 
     private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs args)
     {
-        Debug.Log(" triggered");
-        
         foreach (var trackedImage in args.added)
         {
-            
             UnityEngine.Debug.Log($"Bild erkannt: {trackedImage.referenceImage.name}");
 
             if (trackedImage.referenceImage.name == "start_reference") // Der Name des Bildes aus der XR Reference Image Library

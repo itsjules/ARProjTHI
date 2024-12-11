@@ -7209,19 +7209,19 @@ MonoBehaviour:
   - imageName: PrintKiosk
     prefab: {fileID: 5871100817934356348, guid: cddfa57dc690cf44eba3f2ec63a2c3e0,
       type: 3}
-    offset: {x: 0, y: 0, z: 0}
+    offset: {x: -0.3, y: 0, z: 0}
   - imageName: ValidationKiosk
     prefab: {fileID: 5871100817934356348, guid: a4b55b1f8e85c4242b3fa61cb5cfad7a,
       type: 3}
-    offset: {x: 0, y: 0, z: 0}
+    offset: {x: 0.2, y: 0, z: 0}
   - imageName: MoneyKiosk
     prefab: {fileID: 5871100817934356348, guid: 4343981bcf6452140a68e6be47b288ca,
       type: 3}
-    offset: {x: 0, y: 0, z: 0}
+    offset: {x: -0.3, y: 0, z: 0}
   - imageName: finalQR
     prefab: {fileID: 5871100817934356348, guid: 3e09b30c18d9afd40beaaec3e6824079,
       type: 3}
-    offset: {x: 0, y: 0, z: 0}
+    offset: {x: 0, y: 0.3, z: 0}
 --- !u!224 &1835809112 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3618575315330363742, guid: dae86721c71ee42018bbec0181a4e52e,

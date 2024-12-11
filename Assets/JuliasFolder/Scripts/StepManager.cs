@@ -1,62 +1,91 @@
-using System;
+// StepManager.cs
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-
-
-public enum StepID{
-        PRINTING_INSTRUCTIONS,
-        PRINTED_CARD_INSTRUCTIONS,
-        VALIDATION_INSTRUCTIONS,
-        VALIDATED_CARD_INSTRUCTIONS,
-        MONEY_KIOSK_INSTRUCTIONS, 
-        FINAL_INSTRUCTIONS
-    }
 public class StepManager : MonoBehaviour
 {
     public static StepManager Instance { get; private set; }
-
+    
     private void Awake()
     {
-        transform.parent = null;
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
+        {
             Destroy(gameObject);
+        }
+    }
+    public enum StepType
+    {
+        PrintKiosk,
+        ValidationKiosk,
+        MoneyKiosk,
+        finalQR
     }
 
-    [Tooltip("The current Step in the AR Manual")]
-    [SerializeField] public StepID currentStep;
+
+    [SerializeField]
+    private List<Step> steps;
+
+    private StepType currentStep = StepType.PrintKiosk;
+
+    public void LoadStep(StepType stepType)
+    {
+        currentStep = stepType;
+        var step = steps.Find(s => s.stepType == stepType);
+        if (step != null)
+        {
+            UIController.Instance.ShowInstruction(step.instructionImage);
+        }
+    }
     
-    //Sending step changed event
-    public Action<int> OnStepChanged = delegate { };
-
-
-    private void Start() {
-       currentStep=StepID.PRINTING_INSTRUCTIONS;
+    public void OnImageTracked(string imageName)
+    {
+        var step = steps.Find(s => s.stepType == currentStep);
+        if (step != null && step.imageName == imageName)
+        {
+            UIController.Instance.HideInstruction();
+            StartCoroutine(CompleteStepAfterDelay(5f));
+        }
     }
 
-    public void NextStep(){
-        
-    }
-
-
-
-
-  #region module class Step
-    public class Step{
-        StepID stepID;
-        string trackableText="";
-        Vector3 trackableOffset;
-        string canvasText="";
-        bool buttonState;
-        string requiredImageName;
-        bool isComplete;
-    }
-   #endregion
     
+    private IEnumerator CompleteStepAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UIController.Instance.ShowNextStepButton(() => {
+            if (currentStep == StepType.PrintKiosk)
+            {
+                LoadStep(StepType.ValidationKiosk);
+            }
+            else if (currentStep == StepType.ValidationKiosk)
+            {
+                LoadStep(StepType.MoneyKiosk);
+            }
+            else if (currentStep == StepType.MoneyKiosk)
+            {
+                LoadStep(StepType.finalQR);
+            }
+            else
+            {
+                Debug.Log("No Next Step");
+            }
+        });
+    }
+
+    private void Start()
+    {
+        LoadStep(currentStep);
+    }
+}
+
+[System.Serializable]
+public class Step
+{
+    public StepManager.StepType stepType;
+    public string imageName;
+    public Sprite instructionImage;
 }

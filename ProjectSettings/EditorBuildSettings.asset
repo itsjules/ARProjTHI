@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/JuliasFolder/ImgTrackTry.unity
-    guid: 7735ea110923a734c9488c511a4cbf48
+    path: Assets/GnyandevsFolder/FoodGame.unity
+    guid: e2905d1f7de283f49bd4c4295b185ca3
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

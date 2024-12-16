@@ -6,17 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/StephansFolder/StartScene.unity
-    guid: 3a859d18fd894a64688fb1f41355ee65
-  - enabled: 1
-    path: Assets/StephansFolder/StartAR.unity
-    guid: c5d31e3174640d146861f3741e099379
-  - enabled: 1
-    path: Assets/StephansFolder/Introduction.unity
-    guid: bba978f0bfa788345b0fa34c0d8cde4a
-  - enabled: 1
-    path: Assets/JuliasFolder/TryImgTrackScene2.unity
-    guid: e9c6835ef6341444e924e2e941a7c61b
+    path: Assets/GnyandevsFolder/FoodGame.unity
+    guid: e2905d1f7de283f49bd4c4295b185ca3
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

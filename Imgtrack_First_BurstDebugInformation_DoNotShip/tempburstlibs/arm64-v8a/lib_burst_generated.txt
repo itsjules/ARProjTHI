@@ -38,6 +38,7 @@ Library: C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Temp\BurstOu
 --assembly-defines=UnityEngine;
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Temp\Burst
+--debug=LineOnly
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.20f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Library\Burst
 --output=C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
@@ -82,6 +83,7 @@ Library: C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Temp\BurstOu
 --assembly-defines=UnityEngine;
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Temp\Burst
+--debug=LineOnly
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.20f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Library\Burst
 --output=C:\Users\julpo\OneDrive\Dokumente\Unity Projects\ARProjTHI\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated

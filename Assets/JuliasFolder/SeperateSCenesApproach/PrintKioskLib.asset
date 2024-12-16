@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: PrintKioskLib
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5194169841952703657
+  m_GuidHigh: 14860438779527744698
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5434750152694957565
+      m_GuidHigh: 11050052914558178948
+    m_SerializedTextureGuid:
+      m_GuidLow: 15322486070741167649
+      m_GuidHigh: 10118330750770998425
+    m_Size: {x: 0.2, y: 0.18299213}
+    m_SpecifySize: 1
+    m_Name: PrintKiosk
+    m_Texture: {fileID: 2800000, guid: 3a65ee2167e6d4a499ec9d6735886b8c, type: 3}

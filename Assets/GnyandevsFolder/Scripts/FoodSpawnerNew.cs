@@ -1,57 +1,57 @@
-//Created by JulP
+// //Created by JulP
 
-using UnityEngine;
-using System.Collections;
+// using UnityEngine;
+// using System.Collections;
 
-public class FoodSpawnerNew : MonoBehaviour
-{
-    public GameObject[] foodPrefabs; // Array to hold multiple food prefabs
-    public float spawnDepth = 1.5f; // Depth before the camera for food to spawn
-    
-    public float spawnInterval = 0.5f; // Time between spawns
+// public class FoodSpawnerNew : MonoBehaviour
+// {
+//     public GameObject[] foodPrefabs; // Array to hold multiple food prefabs
+//     public float spawnDepth = 1.5f; // Depth before the camera for food to spawn
 
-     public float fallSpeed = 2.0f; // Controll Fall speed for all foods from Food Spawner (can also be disabled to tweak different falling rates for different foods)
+//     public float spawnInterval = 0.5f; // Time between spawns
 
-    void Start()
-    {
-        StartCoroutine(SpawnFood());
-    }
+//     public float fallSpeed = 2.0f; // Controll Fall speed for all foods from Food Spawner (can also be disabled to tweak different falling rates for different foods)
 
-    IEnumerator SpawnFood()
-    {
-        while (true)
-        {
-            SpawnFoodAboveCamera();
-            yield return new WaitForSeconds(spawnInterval);
-        }
-    }
+//     void Start()
+//     {
+//         StartCoroutine(SpawnFood());
+//     }
 
-    void SpawnFoodAboveCamera()
-    {
-        if (foodPrefabs == null || foodPrefabs.Length == 0 || Camera.main == null)
-            return;
+//     IEnumerator SpawnFood()
+//     {
+//         while (true)
+//         {
+//             SpawnFoodAboveCamera();
+//             yield return new WaitForSeconds(spawnInterval);
+//         }
+//     }
 
-        // Get the camera's viewport bounds
-        Camera cam = Camera.main;
+//     void SpawnFoodAboveCamera()
+//     {
+//         if (foodPrefabs == null || foodPrefabs.Length == 0 || Camera.main == null)
+//             return;
 
-        // Calculate random position within the viewport
-        float randomX = Random.Range(0.1f, 0.9f); // Horizontal viewport range (avoid edges)
-        // float randomY = Random.Range(0.1f, 0.9f); // Vertical viewport range (avoid edges)
-        Vector3 viewportPosition = new Vector3(randomX, 1, cam.nearClipPlane + spawnDepth);
+//         // Get the camera's viewport bounds
+//         Camera cam = Camera.main;
 
-        // Convert the viewport position to world space
-        Vector3 spawnPosition = cam.ViewportToWorldPoint(viewportPosition);
+//         // Calculate random position within the viewport
+//         float randomX = Random.Range(0.1f, 0.9f); // Horizontal viewport range (avoid edges)
+//         // float randomY = Random.Range(0.1f, 0.9f); // Vertical viewport range (avoid edges)
+//         Vector3 viewportPosition = new Vector3(randomX, 1, cam.nearClipPlane + spawnDepth);
 
-        // Pick a random food prefab
-        int randomIndex = Random.Range(0, foodPrefabs.Length);
-        GameObject foodPrefab = foodPrefabs[randomIndex];
+//         // Convert the viewport position to world space
+//         Vector3 spawnPosition = cam.ViewportToWorldPoint(viewportPosition);
 
-        // Instantiate the selected food prefab
-        Instantiate(foodPrefab, spawnPosition, foodPrefab.transform.rotation);
+//         // Pick a random food prefab
+//         int randomIndex = Random.Range(0, foodPrefabs.Length);
+//         GameObject foodPrefab = foodPrefabs[randomIndex];
 
-        
-        // Get the Falling script attached to the food to make the food fall constantly
-        FoodFall foodFall = foodPrefab.GetComponent<FoodFall>();
-        foodFall.fallSpeed = fallSpeed; // Set fall speed for the food object
-    }
-}
+//         // Instantiate the selected food prefab
+//         Instantiate(foodPrefab, spawnPosition, foodPrefab.transform.rotation);
+
+
+//         // Get the Falling script attached to the food to make the food fall constantly
+//         FoodFall foodFall = foodPrefab.GetComponent<FoodFall>();
+//         foodFall.fallSpeed = fallSpeed; // Set fall speed for the food object
+//     }
+// }

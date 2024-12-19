@@ -1,14 +1,40 @@
-//Created by JulP
-
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class FoodFall : MonoBehaviour
 {
-    public float fallSpeed; // Speed at which the food falls 
+    private Transform target; // Transform of the user's face (tracked via ARFaceManager)
+    public float moveSpeed = 3f; // Speed at which the food moves
+
+    void Start()
+    {
+        // Find the ARFaceManager in the scene
+        ARFaceManager faceManager = FindObjectOfType<ARFaceManager>();
+
+        if (faceManager != null && faceManager.trackables.count > 0)
+        {
+            // Get the first face tracked by ARFaceManager
+            foreach (var face in faceManager.trackables)
+            {
+                target = face.transform; // Set target to the face's transform
+                break;
+            }
+        }
+    }
 
     void Update()
     {
-        // Move the food object downward each frame based on the fallSpeed
-        transform.Translate(Vector3.down *0.1f* fallSpeed * Time.deltaTime); // if food prefab has a tilt in rotation to display it better, then the food prefab needs a parent that has 0 rotation, and then the food model as a child with rotation, otherwise this line lets them fall down in a tilt
+        if (target != null)
+        {
+            // Make the food face the target
+            transform.LookAt(target);
+
+            // Move food toward the target
+            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Debug.LogWarning("No face detected. Food cannot move towards the target.");
+        }
     }
 }

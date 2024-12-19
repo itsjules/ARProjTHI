@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028373, g: 0.22571398, b: 0.30692294, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7610,7 +7610,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2024996557}
-  - component: {fileID: 2024996556}
   m_Layer: 0
   m_Name: FoodManager
   m_TagString: Untagged
@@ -7618,28 +7617,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2024996556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024996555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f726c39aa3efc24fbb4f74d5851f202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodPrefabs:
-  - {fileID: 6574202897443252720, guid: b8da014a0dc5fe84aa9e4b8d6125cb77, type: 3}
-  - {fileID: 294599964465735222, guid: b65eaed8e2610704996f24da6b82afbf, type: 3}
-  - {fileID: 9190423127221579763, guid: efe4f5465855d6f448f2953400979c7a, type: 3}
-  - {fileID: 9152073641914881136, guid: dff2b8c34505eec468dcc75b38e22852, type: 3}
-  - {fileID: 8963191013033372440, guid: b76596b981a0e684d8d5422315e77857, type: 3}
-  - {fileID: 7723463527615195606, guid: 34632332ec67d4a489f73940940a0bcd, type: 3}
-  spawnDepth: 0.3
-  spawnInterval: 0.5
-  fallSpeed: 1
 --- !u!4 &2024996557
 Transform:
   m_ObjectHideFlags: 0

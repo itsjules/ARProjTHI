@@ -1,35 +1,39 @@
-using UnityEngine;
+// using UnityEngine;
 
-public class FoodSpawner : MonoBehaviour
-{
-    public GameObject[] foodItems; // Array of food prefabs (healthy/unhealthy)
-    public float spawnRate = 1f; // Time interval between spawns
-    public float spawnHeight = 3f; // Height above AR plane
+// public class FoodSpawner : MonoBehaviour
+// {
+//     public GameObject[] foodItems; // Array of food prefabs
+//     public Transform target; // Reference to user's face (e.g., AR Camera transform)
+//     public float spawnRate = 1f; // Time interval between spawns
+//     public float spawnHeight = 3f; // Height above AR plane
+//     public float spawnOffset = 0.2f; // Horizontal/vertical spawn offset range
 
-    public float spawnOffset=0.2f;
+//     private void Start()
+//     {
+//         InvokeRepeating(nameof(SpawnFood), 0f, spawnRate); // Start spawning food at regular intervals
+//     }
 
-    public GameObject spawnheightMarker;
+//     void SpawnFood()
+//     {
+//         // Randomize spawn position within defined offset
+//         Vector3 spawnPosition = new Vector3(
+//             Random.Range(-spawnOffset, spawnOffset),
+//             spawnHeight,
+//             Random.Range(-spawnOffset, spawnOffset)
+//         );
 
-    private void Start()
-    {
-        InvokeRepeating(nameof(SpawnFood), 0f, spawnRate);
-        Instantiate(spawnheightMarker,new Vector3(0,spawnHeight,0),Quaternion.identity);
-    }
+//         // Instantiate a random food prefab
+//         GameObject food = Instantiate(
+//             foodItems[Random.Range(0, foodItems.Length)],
+//             spawnPosition,
+//             Quaternion.identity
+//         );
 
-    void SpawnFood()
-    {
-        Vector3 spawnPosition = new Vector3(
-            Random.Range(-spawnOffset,spawnOffset), 
-            spawnHeight, 
-            Random.Range(-spawnOffset,spawnOffset)
-        );
+//         // Assign the target (e.g., AR Camera) to the FoodFall script
+//         FoodFall foodFall = food.AddComponent<FoodFall>();
+//         foodFall.target = target;
 
-        GameObject food = Instantiate(
-            foodItems[Random.Range(0, foodItems.Length)], 
-            spawnPosition, 
-            Quaternion.identity
-        );
-
-        food.AddComponent<Rigidbody>(); // Adds gravity to the food
-    }
-}
+//         // Set a random movement speed for variety
+//         foodFall.moveSpeed = Random.Range(2f, 5f);
+//     }
+// }

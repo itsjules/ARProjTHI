@@ -13,6 +13,7 @@ public class FoodDestroyBounds : MonoBehaviour
         {
             Destroy(gameObject);
             Debug.Log("Food missed!");
+            Debug.Log("Effect missing!");
         }
     }
 }

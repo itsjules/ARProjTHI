@@ -3795,16 +3795,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - stepType: 0
-    imageName: PrintKiosk
+    trackingImageName: PrintKiosk
     instructionImage: {fileID: 21300000, guid: d445ab7c0311e8e4d95f52980331254f, type: 3}
   - stepType: 1
-    imageName: ValidationKiosk
+    trackingImageName: ValidationKiosk
     instructionImage: {fileID: 21300000, guid: 3026794a777126d48acd906566bc49d2, type: 3}
   - stepType: 2
-    imageName: MoneyKiosk
+    trackingImageName: MoneyKiosk
     instructionImage: {fileID: 21300000, guid: 0e35349cdbedbea4c96c54eeba3e3e26, type: 3}
   - stepType: 3
-    imageName: finalQR
+    trackingImageName: finalQR
     instructionImage: {fileID: 21300000, guid: 524e61af7b43441489c3fdc230cd1f6a, type: 3}
 --- !u!4 &903001201
 Transform:

@@ -121,7 +121,7 @@ public class ImageTrackingHandler : MonoBehaviour
             var mapping = referencePrefabMappings.Find(m => m.imageName == trackedImage.referenceImage.name);
 
             prefab.transform.position = trackedImage.transform.position + mapping.offset;
-            prefab.transform.rotation = trackedImage.transform.rotation;
+            prefab.transform.rotation = Quaternion.Slerp(prefab.transform.rotation, trackedImage.transform.rotation, Time.deltaTime * 0.5f);
 
             
             // Ensure prefab is visible when tracking

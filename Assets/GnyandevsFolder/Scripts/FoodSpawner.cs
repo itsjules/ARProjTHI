@@ -1,39 +1,84 @@
-// using UnityEngine;
+using UnityEngine;
+using System.Collections;
+using UnityEngine.XR.ARFoundation;
 
-// public class FoodSpawner : MonoBehaviour
-// {
-//     public GameObject[] foodItems; // Array of food prefabs
-//     public Transform target; // Reference to user's face (e.g., AR Camera transform)
-//     public float spawnRate = 1f; // Time interval between spawns
-//     public float spawnHeight = 3f; // Height above AR plane
-//     public float spawnOffset = 0.2f; // Horizontal/vertical spawn offset range
+public class FoodSpawner : MonoBehaviour
+{
+    public GameObject[] foodItems; // Array of food prefabs
+    public float spawnRate = 1f; // Time interval between spawns
+    public float spawnOffset = 0.2f; // Horizontal/vertical spawn offset range
 
-//     private void Start()
-//     {
-//         InvokeRepeating(nameof(SpawnFood), 0f, spawnRate); // Start spawning food at regular intervals
-//     }
+    private Transform target; // Reference to the user's face (detected by ARFaceManager)
 
-//     void SpawnFood()
-//     {
-//         // Randomize spawn position within defined offset
-//         Vector3 spawnPosition = new Vector3(
-//             Random.Range(-spawnOffset, spawnOffset),
-//             spawnHeight,
-//             Random.Range(-spawnOffset, spawnOffset)
-//         );
+    private void Start()
+    {
+        // Start the coroutine to spawn food
+        StartCoroutine(SpawnFoodCoroutine());
 
-//         // Instantiate a random food prefab
-//         GameObject food = Instantiate(
-//             foodItems[Random.Range(0, foodItems.Length)],
-//             spawnPosition,
-//             Quaternion.identity
-//         );
+        // Find and assign the detected face from ARFaceManager
+        ARFaceManager faceManager = FindObjectOfType<ARFaceManager>();
+        if (faceManager != null && faceManager.trackables.count > 0)
+        {
+            foreach (var face in faceManager.trackables)
+            {
+                target = face.transform; // Assign the first detected face as the target
+                break;
+            }
+        }
 
-//         // Assign the target (e.g., AR Camera) to the FoodFall script
-//         FoodFall foodFall = food.AddComponent<FoodFall>();
-//         foodFall.target = target;
+        if (target == null)
+        {
+            Debug.LogError("No face detected by ARFaceManager. Spawning may fail.");
+        }
+    }
 
-//         // Set a random movement speed for variety
-//         foodFall.moveSpeed = Random.Range(2f, 5f);
-//     }
-// }
+    private IEnumerator SpawnFoodCoroutine()
+    {
+        while (true)
+        {
+            SpawnFood();
+            yield return new WaitForSeconds(spawnRate); // Wait for the defined spawn rate
+        }
+    }
+
+    void SpawnFood()
+    {
+        if (Camera.main == null)
+        {
+            Debug.LogError("AR Camera not found. Ensure the AR Camera is tagged as 'MainCamera'.");
+            return;
+        }
+
+        // Get the AR Camera's height (Y position)
+        float cameraHeight = Camera.main.transform.position.y;
+
+        // Calculate spawn height relative to the AR Camera
+        float spawnHeight = cameraHeight ; // no offset
+
+        // Randomize spawn position
+        Vector3 spawnPosition = new Vector3(
+            Random.Range(-spawnOffset, spawnOffset),
+            spawnHeight,
+            Camera.main.transform.position.z - 0.1f // Spawn behind the camera
+        );
+
+        // Instantiate food
+        if (foodItems.Length > 0)
+        {
+            GameObject food = Instantiate(
+                foodItems[Random.Range(0, foodItems.Length)],
+                spawnPosition,
+                Quaternion.identity
+            );
+
+            // Assign target and movement to the food
+            FoodFall foodFall = food.AddComponent<FoodFall>();
+            foodFall.target = target;
+            foodFall.moveSpeed = Random.Range(2f, 5f);
+        }
+        else
+        {
+            Debug.LogError("No food items assigned to the FoodSpawner.");
+        }
+    }
+}

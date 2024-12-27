@@ -3,38 +3,42 @@ using UnityEngine.XR.ARFoundation;
 
 public class FoodFall : MonoBehaviour
 {
-    private Transform target; // Transform of the user's face (tracked via ARFaceManager)
-    public float moveSpeed = 3f; // Speed at which the food moves
+    public Transform target; // Transform of the user's face (tracked via ARFaceManager or set in editor)
+    public float moveSpeed = 0.1f; // Speed at which the food moves
+    public bool testMode = false; // Enable test mode for Unity editor testing
+    public float destroyAfterSeconds = 15f; // Time after which the food item is destroyed
 
     void Start()
     {
-        // Find the ARFaceManager in the scene
-        ARFaceManager faceManager = FindObjectOfType<ARFaceManager>();
-
-        if (faceManager != null && faceManager.trackables.count > 0)
-        {
-            // Get the first face tracked by ARFaceManager
-            foreach (var face in faceManager.trackables)
-            {
-                target = face.transform; // Set target to the face's transform
-                break;
-            }
-        }
+        // Schedule destruction after the specified time
+        Destroy(gameObject, destroyAfterSeconds);
     }
 
     void Update()
     {
-        if (target != null)
+        if (testMode)
+        {
+            // Test target position: 1.5 meters in front of the AR Camera
+            Vector3 testTargetPos = new Vector3(
+                Camera.main.transform.position.x,
+                Camera.main.transform.position.y,
+                Camera.main.transform.position.z + 1.5f
+            );
+
+            // Test food moving
+            transform.position = Vector3.MoveTowards(transform.position, testTargetPos, moveSpeed * Time.deltaTime);
+        }
+        else if (target != null)
         {
             // Make the food face the target
             transform.LookAt(target);
 
-            // Move food toward the target
+            // Move food toward the actual target
             transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
         }
         else
         {
-            Debug.LogWarning("No face detected. Food cannot move towards the target.");
+            Debug.LogWarning("No target detected. Food cannot move towards the target.");
         }
     }
 }

@@ -5,7 +5,8 @@ public class FoodFall : MonoBehaviour
 {
     public Transform target; // Transform of the user's face (tracked via ARFaceManager or set in editor)
     public float moveSpeed = 0.1f; // Speed at which the food moves
-    public bool testMode = false; // Enable test mode for Unity editor testing
+
+    private float testTargetOffset= 0.5f; //Test Target position from camera
     public float destroyAfterSeconds = 15f; // Time after which the food item is destroyed
 
     void Start()
@@ -16,13 +17,13 @@ public class FoodFall : MonoBehaviour
 
     void Update()
     {
-        if (testMode)
+        if (FoodSpawner.Instance.testMode)
         {
             // Test target position: 1.5 meters in front of the AR Camera
             Vector3 testTargetPos = new Vector3(
                 Camera.main.transform.position.x,
                 Camera.main.transform.position.y,
-                Camera.main.transform.position.z + 1.5f
+                Camera.main.transform.position.z + testTargetOffset
             );
 
             // Test food moving

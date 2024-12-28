@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class FoodEater : MonoBehaviour
 {
+    private ParticleSystem FXateFood;
+
+    private void Start() {
+        FXateFood = transform.Find("AteFood")?.GetComponent<ParticleSystem>();
+    }
     void OnTriggerEnter(Collider collider)
     {
         // Check if the object has the "food" tag
@@ -21,6 +26,9 @@ public class FoodEater : MonoBehaviour
             {
                 ScoreManager.Instance.AddUnhealthyScore();
             }
+
+            //Play Particle effect if not null
+            FXateFood?.Play();
 
             // Destroy the food object
             Destroy(collider.gameObject);

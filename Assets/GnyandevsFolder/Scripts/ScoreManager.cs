@@ -8,8 +8,9 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text healthyScoreText;
     public TMP_Text unhealthyScoreText;
     public TMP_Text timerText;
+    public TMP_Text resultText; // Display result after game ends
 
-    public float gameDuration = 30f; // 30-second timer
+    public float gameDuration = 60f; // 60-second timer
     private float timer;
 
     public static ScoreManager Instance;
@@ -55,6 +56,7 @@ public class ScoreManager : MonoBehaviour
     {
         healthyScore = 0;
         unhealthyScore = 0;
+        resultText.text = ""; // Clear previous result text
         UpdateScoreTexts();
     }
 
@@ -102,13 +104,13 @@ public class ScoreManager : MonoBehaviour
         // Determine if the user's diet was healthy or not
         bool isHealthyDiet = unhealthyScore <= healthyScore / 3;
         string resultMessage = isHealthyDiet
-            ? "Congratulations! Your diet was healthy!"
-            : "Oops! Your diet was unhealthy. Try to balance better next time.";
+            ? "Super, you have a healthy diet!"
+            : "Oopsie Daisy, you might want to improve your diet champ.";
 
-        // Display result (replace this with a UI-based message if needed)
+        // Display result
+        resultText.text = resultMessage;
+
+        // Debug log for verification
         Debug.Log(resultMessage);
-
-        // Optionally, reset scores for replayability
-        ResetScores();
     }
 }

@@ -10,26 +10,17 @@ public class FoodSpawner : MonoBehaviour
 
     private Transform target; // Reference to the user's face (detected by ARFaceManager)
 
+    [SerializeField]
+    private ARFaceManager ARFaceManager;
+
     private void Start()
     {
         // Start the coroutine to spawn food
         StartCoroutine(SpawnFoodCoroutine());
 
-        // Find and assign the detected face from ARFaceManager
-        ARFaceManager faceManager = FindObjectOfType<ARFaceManager>();
-        if (faceManager != null && faceManager.trackables.count > 0)
-        {
-            foreach (var face in faceManager.trackables)
-            {
-                target = face.transform; // Assign the first detected face as the target
-                break;
-            }
-        }
-
-        if (target == null)
-        {
-            Debug.LogError("No face detected by ARFaceManager. Spawning may fail.");
-        }
+        //Set the Face Position as the target
+        SetFaceTarget();
+        
     }
 
     private IEnumerator SpawnFoodCoroutine()
@@ -59,7 +50,7 @@ public class FoodSpawner : MonoBehaviour
         Vector3 spawnPosition = new Vector3(
             Random.Range(-spawnOffset, spawnOffset),
             spawnHeight,
-            Camera.main.transform.position.z - 0.1f // Spawn behind the camera
+            Camera.main.transform.position.z - 0.5f // Spawn behind the camera
         );
 
         // Instantiate food
@@ -72,6 +63,7 @@ public class FoodSpawner : MonoBehaviour
             );
 
             // Assign target and movement to the food
+            SetFaceTarget();
             FoodFall foodFall = food.AddComponent<FoodFall>();
             foodFall.target = target;
             foodFall.moveSpeed = Random.Range(2f, 5f);
@@ -79,6 +71,24 @@ public class FoodSpawner : MonoBehaviour
         else
         {
             Debug.LogError("No food items assigned to the FoodSpawner.");
+        }
+    }
+
+    void SetFaceTarget(){
+        // Find and assign the detected face from ARFaceManager
+        //ARFaceManager ARFaceManager = FindObjectOfType<ARFaceManager>();
+        if (ARFaceManager != null && ARFaceManager.trackables.count > 0)
+        {
+            foreach (var face in ARFaceManager.trackables)
+            {
+                target = face.transform; // Assign the first detected face as the target
+                break;
+            }
+        }
+
+        if (target == null)
+        {
+            Debug.LogError("No face detected by ARFaceManager. Spawning may fail.");
         }
     }
 }

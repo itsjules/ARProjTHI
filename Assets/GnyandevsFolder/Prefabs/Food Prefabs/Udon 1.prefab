@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2287959363428477535}
   - component: {fileID: 653810810472215436}
   - component: {fileID: -7021841661704489151}
-  - component: {fileID: -7810577245978548103}
   m_Layer: 0
   m_Name: Udon 1
   m_TagString: food
@@ -121,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd515c8fa99b8974fb136b5686c72b66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outOfBoundsY: 2
+  outOfBoundsZ: -5
 --- !u!114 &-7021841661704489151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,18 +134,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
---- !u!114 &-7810577245978548103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7723463527615195606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f813ad615810643ad03311fb5f85a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  moveSpeed: 0.1
-  testMode: 1

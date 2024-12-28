@@ -4,46 +4,24 @@ using UnityEngine.XR.ARFoundation;
 
 public class FoodSpawner : MonoBehaviour
 {
-    public static FoodSpawner Instance;
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    
     public GameObject[] foodItems; // Array of food prefabs
     public float spawnRate = 1f; // Time interval between spawns
-    // public float spawnOffset = 0.2f; // Horizontal/vertical spawn offset range
- 
-    [SerializeField, Tooltip("Multiplier to enlarge the spawn area relative to the screen size.")]
-    private float spawnAreaMultiplier = 1f;
-
-    [SerializeField, Tooltip("Distance behind the camera for spawning objects.")]
-    private float spawnDepthOffset = 1f;
-
-    public Vector2 moveSpeedRange=new Vector2(0.1f,0.4f);
-
-    public bool testMode = true; // Enable test mode without Face Tracking for Unity editor testing
-    private Transform target; // Reference to the user's face (detected by ARFaceManager)
+    public float moveSpeed = 2f; // Speed of the food
+    public float spawnDepthOffset = -0.1f; // Slightly behind the near clip plane
+    public float targetAreaOffset = 0.2f; // Offset around the player's face (target area)
 
     [SerializeField]
-    private ARFaceManager ARFaceManager;
+    private ARFaceManager ARFaceManager; // Reference to ARFaceManager for face tracking
 
-    private void Start()
+    private Transform faceTarget; // Transform of the detected face
+    private Camera mainCamera;
+
+    void Start()
     {
-        // Start the coroutine to spawn food
-        StartCoroutine(SpawnFoodCoroutine());
+        mainCamera = Camera.main;
 
-        //Set the Face Position as the target
-        SetFaceTarget();
-        
+        // Start spawning food at regular intervals
+        StartCoroutine(SpawnFoodCoroutine());
     }
 
     private IEnumerator SpawnFoodCoroutine()
@@ -51,81 +29,104 @@ public class FoodSpawner : MonoBehaviour
         while (true)
         {
             SpawnFood();
-            yield return new WaitForSeconds(spawnRate); // Wait for the defined spawn rate
+            yield return new WaitForSeconds(spawnRate); // Wait before spawning the next food
         }
     }
 
     void SpawnFood()
     {
-        //get random spawnpoint for food
-        Vector3 spawnPosition = GetSpawnPoint();
-
-        // Instantiate food
-        if (foodItems.Length > 0)
+        if (foodItems.Length == 0 || mainCamera == null)
         {
-            GameObject food = Instantiate(
-                foodItems[Random.Range(0, foodItems.Length)],
-                spawnPosition,
-                Quaternion.identity
-            );
+            Debug.LogError("No food items assigned or Camera not available.");
+            return;
+        }
 
-            // Assign target and movement to the food
-            SetFaceTarget();
-            FoodFall foodFall = food.AddComponent<FoodFall>();
-            foodFall.target = target;
-            foodFall.moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
-        }
-        else
-        {
-            Debug.LogError("No food items assigned to the FoodSpawner.");
-        }
+        // Update the face target
+        SetFaceTarget();
+
+        // Get a random spawn position along the screen edges
+        Vector3 spawnPosition = GetRandomEdgeSpawnPosition();
+
+        // Instantiate a random food prefab at the spawn position
+        GameObject food = Instantiate(
+            foodItems[Random.Range(0, foodItems.Length)],
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        // Get the target position (face position with some offset)
+        Vector3 targetPosition = GetTargetPosition();
+
+        // Add a simple movement component to make the food move toward the target
+        FoodFall foodMovement = food.AddComponent<FoodFall>();
+        foodMovement.Initialize(targetPosition, moveSpeed);
     }
 
-    void SetFaceTarget(){
+    Vector3 GetRandomEdgeSpawnPosition()
+    {
+        float randomX, randomY;
+        Vector3 viewportPosition;
+        float spawnDepth = mainCamera.nearClipPlane + spawnDepthOffset; // Slightly behind near clip plane
+
+        // Randomize edge (0 = left, 1 = right, 2 = top, 3 = bottom)
+        int edge = Random.Range(0, 4);
+
+        switch (edge)
+        {
+            case 0: // Left edge
+                randomY = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(0, randomY, spawnDepth);
+                break;
+            case 1: // Right edge
+                randomY = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(1, randomY, spawnDepth);
+                break;
+            case 2: // Top edge
+                randomX = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(randomX, 1, spawnDepth);
+                break;
+            case 3: // Bottom edge
+                randomX = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(randomX, 0, spawnDepth);
+                break;
+            default:
+                viewportPosition = new Vector3(0.5f, 0.5f, spawnDepth); // Fallback to center
+                break;
+        }
+
+        // Convert viewport position to world space
+        return mainCamera.ViewportToWorldPoint(viewportPosition);
+    }
+
+    Vector3 GetTargetPosition()
+    {
+        // If a face is detected, use its position; otherwise, default to a central point in front of the camera
+        Vector3 targetPosition = faceTarget != null
+            ? faceTarget.position
+            : mainCamera.transform.position + mainCamera.transform.forward * 1f;
+
+        // Add some random offset around the target for variety
+        targetPosition.x += Random.Range(-targetAreaOffset, targetAreaOffset);
+        targetPosition.y += Random.Range(-targetAreaOffset, targetAreaOffset);
+
+        return targetPosition;
+    }
+
+    void SetFaceTarget()
+    {
         // Find and assign the detected face from ARFaceManager
-        //ARFaceManager ARFaceManager = FindObjectOfType<ARFaceManager>();
         if (ARFaceManager != null && ARFaceManager.trackables.count > 0)
         {
             foreach (var face in ARFaceManager.trackables)
             {
-                target = face.transform; // Assign the first detected face as the target
+                faceTarget = face.transform; // Assign the first detected face as the target
                 break;
             }
         }
 
-        if (target == null && !testMode)
+        if (faceTarget == null)
         {
-            Debug.LogError("No face detected by ARFaceManager. Spawning may fail.");
+            Debug.LogWarning("No face detected. Defaulting to central forward target.");
         }
-    }
-
-    Vector3 GetSpawnPoint(){
-
-        //Null-Check
-        if (Camera.main == null)
-        {
-            Debug.LogError("Camera is not assigned.");
-            return Vector3.zero;
-        }
-
-        // Get the Main Camera's position
-        Vector3 cameraPosition = Camera.main.transform.position;
-
-        // Calculate world space dimensions based on screen size (multiplying by 2 to calculate whole screeSpace in World)
-        float worldWidth = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 1)).x * 2;
-        float worldHeight = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 1)).y * 2;
-
-        // Scale the spawn area
-        float spawnAreaWidth = worldWidth * spawnAreaMultiplier;
-        float spawnAreaHeight = worldHeight * spawnAreaMultiplier;
-
-        // Randomize spawn position within the larger area behind the camera (divide by 2 to make camera midpoint of spawning area)
-        Vector3 spawnPosition = new Vector3(
-            cameraPosition.x + Random.Range(-spawnAreaWidth / 2f, spawnAreaWidth / 2f),
-            cameraPosition.y + Random.Range(-spawnAreaHeight / 2f, spawnAreaHeight / 2f),
-            cameraPosition.z - spawnDepthOffset
-        );
-
-        return spawnPosition;
     }
 }

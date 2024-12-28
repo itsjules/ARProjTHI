@@ -7,7 +7,10 @@ using UnityEngine;
 public class FoodDestroyBounds : MonoBehaviour
 {
     //public float outOfBoundsY = 2.0f; // Vertical out-of-bounds threshold
-    public float outOfBoundsZ = -5.0f; // Z-axis out-of-bounds threshold
+    public float outOfBoundsZ = -1.0f; // Z-axis out-of-bounds threshold
+
+
+
 
     void Update()
     {

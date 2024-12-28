@@ -1,3 +1,4 @@
+//created by JulP
 using UnityEngine;
 using System.Collections;
 using UnityEngine.XR.ARFoundation;
@@ -6,21 +7,22 @@ public class FoodSpawner : MonoBehaviour
 {
     public GameObject[] foodItems; // Array of food prefabs
     public float spawnRate = 1f; // Time interval between spawns
-    public float spawnOffset = 0.2f; // Horizontal/vertical spawn offset range
-
-    private Transform target; // Reference to the user's face (detected by ARFaceManager)
+    public float moveSpeed = 2f; // Speed of the food
+    public float spawnDepthOffset = -0.1f; // Slightly behind the near clip plane
+    public float targetAreaOffset = 0.2f; // Offset around the player's face (target area)
 
     [SerializeField]
-    private ARFaceManager ARFaceManager;
+    private ARFaceManager ARFaceManager; // Reference to ARFaceManager for face tracking
 
-    private void Start()
+    private Transform faceTarget; // Transform of the detected face
+    private Camera mainCamera;
+
+    void Start()
     {
-        // Start the coroutine to spawn food
-        StartCoroutine(SpawnFoodCoroutine());
+        mainCamera = Camera.main;
 
-        //Set the Face Position as the target
-        SetFaceTarget();
-        
+        // Start spawning food at regular intervals
+        StartCoroutine(SpawnFoodCoroutine());
     }
 
     private IEnumerator SpawnFoodCoroutine()
@@ -28,67 +30,104 @@ public class FoodSpawner : MonoBehaviour
         while (true)
         {
             SpawnFood();
-            yield return new WaitForSeconds(spawnRate); // Wait for the defined spawn rate
+            yield return new WaitForSeconds(spawnRate); // Wait before spawning the next food
         }
     }
 
     void SpawnFood()
     {
-        if (Camera.main == null)
+        if (foodItems.Length == 0 || mainCamera == null)
         {
-            Debug.LogError("AR Camera not found. Ensure the AR Camera is tagged as 'MainCamera'.");
+            Debug.LogError("No food items assigned or Camera not available.");
             return;
         }
 
-        // Get the AR Camera's height (Y position)
-        float cameraHeight = Camera.main.transform.position.y;
+        // Update the face target
+        SetFaceTarget();
 
-        // Calculate spawn height relative to the AR Camera
-        float spawnHeight = cameraHeight ; // no offset
+        // Get a random spawn position along the screen edges
+        Vector3 spawnPosition = GetRandomEdgeSpawnPosition();
 
-        // Randomize spawn position
-        Vector3 spawnPosition = new Vector3(
-            Random.Range(-spawnOffset, spawnOffset),
-            spawnHeight,
-            Camera.main.transform.position.z - 0.5f // Spawn behind the camera
+        // Instantiate a random food prefab at the spawn position
+        GameObject food = Instantiate(
+            foodItems[Random.Range(0, foodItems.Length)],
+            spawnPosition,
+            Quaternion.identity
         );
 
-        // Instantiate food
-        if (foodItems.Length > 0)
-        {
-            GameObject food = Instantiate(
-                foodItems[Random.Range(0, foodItems.Length)],
-                spawnPosition,
-                Quaternion.identity
-            );
+        // Get the target position (face position with some offset)
+        Vector3 targetPosition = GetTargetPosition();
 
-            // Assign target and movement to the food
-            SetFaceTarget();
-            FoodFall foodFall = food.AddComponent<FoodFall>();
-            foodFall.target = target;
-            foodFall.moveSpeed = Random.Range(2f, 5f);
-        }
-        else
-        {
-            Debug.LogError("No food items assigned to the FoodSpawner.");
-        }
+        // Add a simple movement component to make the food move toward the target
+        FoodFall foodMovement = food.AddComponent<FoodFall>();
+        foodMovement.Initialize(targetPosition, moveSpeed);
     }
 
-    void SetFaceTarget(){
+    Vector3 GetRandomEdgeSpawnPosition()
+    {
+        float randomX, randomY;
+        Vector3 viewportPosition;
+        float spawnDepth = mainCamera.nearClipPlane + spawnDepthOffset; // Slightly behind near clip plane
+
+        // Randomize edge (0 = left, 1 = right, 2 = top, 3 = bottom)
+        int edge = Random.Range(0, 4);
+
+        switch (edge)
+        {
+            case 0: // Left edge
+                randomY = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(0, randomY, spawnDepth);
+                break;
+            case 1: // Right edge
+                randomY = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(1, randomY, spawnDepth);
+                break;
+            case 2: // Top edge
+                randomX = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(randomX, 1, spawnDepth);
+                break;
+            case 3: // Bottom edge
+                randomX = Random.Range(0f, 1f);
+                viewportPosition = new Vector3(randomX, 0, spawnDepth);
+                break;
+            default:
+                viewportPosition = new Vector3(0.5f, 0.5f, spawnDepth); // Fallback to center
+                break;
+        }
+
+        // Convert viewport position to world space
+        return mainCamera.ViewportToWorldPoint(viewportPosition);
+    }
+
+    Vector3 GetTargetPosition()
+    {
+        // If a face is detected, use its position; otherwise, default to a central point in front of the camera
+        Vector3 targetPosition = faceTarget != null
+            ? faceTarget.position
+            : mainCamera.transform.position + mainCamera.transform.forward * 1f;
+
+        // Add some random offset around the target for variety
+        targetPosition.x += Random.Range(-targetAreaOffset, targetAreaOffset);
+        targetPosition.y += Random.Range(-targetAreaOffset, targetAreaOffset);
+
+        return targetPosition;
+    }
+
+    void SetFaceTarget()
+    {
         // Find and assign the detected face from ARFaceManager
-        //ARFaceManager ARFaceManager = FindObjectOfType<ARFaceManager>();
         if (ARFaceManager != null && ARFaceManager.trackables.count > 0)
         {
             foreach (var face in ARFaceManager.trackables)
             {
-                target = face.transform; // Assign the first detected face as the target
+                faceTarget = face.transform; // Assign the first detected face as the target
                 break;
             }
         }
 
-        if (target == null)
+        if (faceTarget == null)
         {
-            Debug.LogError("No face detected by ARFaceManager. Spawning may fail.");
+            Debug.LogWarning("No face detected. Defaulting to central forward target.");
         }
     }
 }

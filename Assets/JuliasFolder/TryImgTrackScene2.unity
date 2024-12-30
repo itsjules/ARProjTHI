@@ -1349,6 +1349,11 @@ PrefabInstance:
       propertyPath: m_OccludeARHitsWith2DObjects
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2512387470319625119, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae,
         type: 3}
       propertyPath: m_Name
@@ -1680,7 +1685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &436358033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3795,16 +3800,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - stepType: 0
-    imageName: PrintKiosk
+    trackingImageName: PrintKiosk
     instructionImage: {fileID: 21300000, guid: d445ab7c0311e8e4d95f52980331254f, type: 3}
   - stepType: 1
-    imageName: ValidationKiosk
+    trackingImageName: ValidationKiosk
     instructionImage: {fileID: 21300000, guid: 3026794a777126d48acd906566bc49d2, type: 3}
   - stepType: 2
-    imageName: MoneyKiosk
+    trackingImageName: MoneyKiosk
     instructionImage: {fileID: 21300000, guid: 0e35349cdbedbea4c96c54eeba3e3e26, type: 3}
   - stepType: 3
-    imageName: finalQR
+    trackingImageName: finalQR
     instructionImage: {fileID: 21300000, guid: 524e61af7b43441489c3fdc230cd1f6a, type: 3}
 --- !u!4 &903001201
 Transform:

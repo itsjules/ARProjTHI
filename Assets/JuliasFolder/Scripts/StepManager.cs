@@ -33,6 +33,8 @@ public class StepManager : MonoBehaviour
 
     private StepType currentStep = StepType.PrintKiosk;
 
+    
+
     public Step GetCurrentStep()
     {
         return steps.Find(s => s.stepType == currentStep);
@@ -79,7 +81,7 @@ public class StepManager : MonoBehaviour
             }
             else if (currentStep == StepType.finalQR)
             {
-                SceneManager.LoadScene("FoodGame");
+                UIController.Instance.ShowLevelOverview();
             }
             else
             {

@@ -1,14 +1,33 @@
-//Created by JulP
-
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class FoodFall : MonoBehaviour
 {
-    public float fallSpeed; // Speed at which the food falls 
+    private Vector3 targetPosition;
+    private float moveSpeed;
+
+    private ParticleSystem FXfoodMissed;
+
+    public void Initialize(Vector3 target, float speed)
+    {
+        targetPosition = target;
+        moveSpeed = speed;
+        FXfoodMissed = transform.Find("MissedFood")?.GetComponent<ParticleSystem>();
+    }
+
+    
 
     void Update()
     {
-        // Move the food object downward each frame based on the fallSpeed
-        transform.Translate(Vector3.down *0.1f* fallSpeed * Time.deltaTime); // if food prefab has a tilt in rotation to display it better, then the food prefab needs a parent that has 0 rotation, and then the food model as a child with rotation, otherwise this line lets them fall down in a tilt
+        // Move toward the target position
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+        // Destroy the object if it reaches the target before its eaten
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+        {   
+            FXfoodMissed?.Play();
+            
+            Destroy(gameObject);
+        }
     }
 }

@@ -3,7 +3,11 @@ guid: 3bed97e11d9a14d748d43e8429bce48e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - foodEatenEffect: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4,
+      type: 3}
+  - faceColliderTransform: {fileID: 7246445602633181565, guid: 81ba6ed21a51f7e48b3d28f75e50aa21,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

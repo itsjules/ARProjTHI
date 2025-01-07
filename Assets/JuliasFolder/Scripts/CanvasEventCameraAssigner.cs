@@ -8,7 +8,6 @@ public class CanvasEventCameraAssigner : MonoBehaviour
         Canvas canvas = GetComponent<Canvas>();
         if (canvas != null && canvas.renderMode == RenderMode.WorldSpace)
         {
-            // Assign the main camera or AR camera as the Event Camera
             canvas.worldCamera = Camera.main;
         }
     }

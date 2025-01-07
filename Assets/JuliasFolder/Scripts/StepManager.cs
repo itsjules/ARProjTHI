@@ -31,7 +31,9 @@ public class StepManager : MonoBehaviour
     [SerializeField]
     private List<Step> steps;
 
-    private StepType currentStep = StepType.PrintKiosk;
+    public StepType currentStep = StepType.PrintKiosk;
+
+    public ParticleEffectSpawner particleEffectSpawner;
 
     
 
@@ -78,6 +80,7 @@ public class StepManager : MonoBehaviour
             else if (currentStep == StepType.MoneyKiosk)
             {
                 LoadStep(StepType.finalQR);
+                particleEffectSpawner.SpawnEffect("Confetti");
             }
             else if (currentStep == StepType.finalQR)
             {

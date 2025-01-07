@@ -27,6 +27,8 @@ public class UIController : MonoBehaviour
     private GameObject ARManualUI;
     [SerializeField]
     private GameObject Canvas_leveloverview03;
+    [SerializeField]
+    private GameObject Canvas_InstructionsGame3;
 
     
 
@@ -57,6 +59,11 @@ public class UIController : MonoBehaviour
     public void ShowLevelOverview(){
         ARManualUI.SetActive(false);
         Canvas_leveloverview03.SetActive(true);
+    }
+
+    public void ShowGame3Instruction(){
+        Canvas_leveloverview03.SetActive(false);
+        Canvas_InstructionsGame3.SetActive(true);
     }
 
 

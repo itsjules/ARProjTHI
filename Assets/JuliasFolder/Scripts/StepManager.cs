@@ -66,6 +66,15 @@ public class StepManager : MonoBehaviour
 
     private IEnumerator CompleteStepAfterDelay(float delay)
     {
+        //Show Button directly after capturing finalQR Code
+        if (currentStep == StepType.finalQR)
+        {
+            UIController.Instance.ShowNextStepButton(() =>
+            {
+                UIController.Instance.ShowLevelOverview();
+            });
+        }
+        //the Rest of manual steps have a delay of the Button
         yield return new WaitForSeconds(delay);
         UIController.Instance.ShowNextStepButton(() =>
         {
@@ -81,10 +90,6 @@ public class StepManager : MonoBehaviour
             {
                 LoadStep(StepType.finalQR);
                 particleEffectSpawner.SpawnEffect("Confetti");
-            }
-            else if (currentStep == StepType.finalQR)
-            {
-                UIController.Instance.ShowLevelOverview();
             }
             else
             {

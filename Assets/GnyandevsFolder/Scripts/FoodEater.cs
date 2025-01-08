@@ -7,7 +7,8 @@ using UnityEngine;
 public class FoodEater : MonoBehaviour
 {
 
-    public GameObject foodEatenEffect; // Particle effect prefab
+    public GameObject foodEatenEffect; // Food eaten Particle effect prefab
+    private float effectScaleMultiplier = 0.008f; //Decrease scale of effect
 
     void OnTriggerEnter(Collider collider)
     {
@@ -16,7 +17,8 @@ public class FoodEater : MonoBehaviour
             // Play particle effect at the foods position
             if (foodEatenEffect != null)
             {
-                Instantiate(foodEatenEffect, collider.transform.position, Quaternion.identity);
+                GameObject spawnedEffect=Instantiate(foodEatenEffect, collider.transform.position, Quaternion.identity);
+                spawnedEffect.transform.localScale *= effectScaleMultiplier;
             }
             
             // Is food healthy or unhealthy for score

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4972351589644477200}
   - component: {fileID: 6567507207997534936}
   - component: {fileID: 4915860304964688903}
+  - component: {fileID: -7454844329140459881}
   m_Layer: 0
   m_Name: Curry plate 1
   m_TagString: food
@@ -33,8 +34,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 313815192148032116}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4103529275715351337
@@ -135,66 +135,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
---- !u!1001 &313815192148153220
-PrefabInstance:
+--- !u!114 &-7454844329140459881
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1107166117457230988}
-    m_Modifications:
-    - target: {fileID: 180128, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_Name
-      value: MissedFood
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}
---- !u!4 &313815192148032116 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 403952, guid: 5cfc02368f4e7014abd83befa8d29ff4,
-    type: 3}
-  m_PrefabInstance: {fileID: 313815192148153220}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294599964465735222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f813ad615810643ad03311fb5f85a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodMissedEffect: {fileID: 180128, guid: 5cfc02368f4e7014abd83befa8d29ff4, type: 3}

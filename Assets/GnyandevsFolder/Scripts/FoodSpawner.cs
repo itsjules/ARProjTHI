@@ -34,6 +34,7 @@ public class FoodSpawner : MonoBehaviour
         }
     }
 
+    // Spawns the food and lets it fly towards the picked target
     void SpawnFood()
     {
         if (foodItems.Length == 0 || mainCamera == null)
@@ -58,18 +59,22 @@ public class FoodSpawner : MonoBehaviour
         // Get the target position (face position with some offset)
         Vector3 targetPosition = GetTargetPosition();
 
-        // Add a simple movement component to make the food move toward the target
-        FoodFall foodMovement = food.AddComponent<FoodFall>();
+        // Get the Food Fall Component and initialize the targetPosition to fly towards and speed
+        FoodFall foodMovement = food.GetComponent<FoodFall>();
         foodMovement.Initialize(targetPosition, moveSpeed);
     }
 
+    /// <summary>
+/// Returns Randowm Spawnpoint in Worldspace behind the Phones edges
+/// </summary>
+/// <returns>A Vector3 of the random Spawnpoint</returns>
     Vector3 GetRandomEdgeSpawnPosition()
     {
         float randomX, randomY;
         Vector3 viewportPosition;
         float spawnDepth = mainCamera.nearClipPlane + spawnDepthOffset; // Slightly behind near clip plane
 
-        // Randomize edge (0 = left, 1 = right, 2 = top, 3 = bottom)
+        //Pick random edge
         int edge = Random.Range(0, 4);
 
         switch (edge)
@@ -99,6 +104,10 @@ public class FoodSpawner : MonoBehaviour
         return mainCamera.ViewportToWorldPoint(viewportPosition);
     }
 
+    /// <summary>
+/// Returns Randowm Targetpoint in Worldspace in the area around the Players detected Face
+/// </summary>
+/// <returns>A Vector3 of the random Targetpoint around Players Face</returns>    
     Vector3 GetTargetPosition()
     {
         // If a face is detected, use its position; otherwise, default to a central point in front of the camera
@@ -106,13 +115,16 @@ public class FoodSpawner : MonoBehaviour
             ? faceTarget.position
             : mainCamera.transform.position + mainCamera.transform.forward * 1f;
 
-        // Add some random offset around the target for variety
+        // Add some random offset around the target
         targetPosition.x += Random.Range(-targetAreaOffset, targetAreaOffset);
         targetPosition.y += Random.Range(-targetAreaOffset, targetAreaOffset);
 
         return targetPosition;
     }
 
+    /// <summary>
+/// Sets the faceTarget as the main point of the Face detected by ARFaceManager
+/// </summary>
     void SetFaceTarget()
     {
         // Find and assign the detected face from ARFaceManager

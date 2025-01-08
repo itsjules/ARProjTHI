@@ -71,11 +71,9 @@ public class StepManager : MonoBehaviour
         {
             UIController.Instance.ShowNextStepButton(() =>
             {
-                // UIController.Instance.ShowLevelOverview();
-                SceneManager.LoadScene("Game3Instructions");
+                UIController.Instance.ShowLevelOverview();
                 
             });
-            
             yield break;
         }
         //the Rest of manual steps have a delay of the Button

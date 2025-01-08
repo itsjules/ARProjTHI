@@ -6,17 +6,24 @@ using UnityEngine.XR.ARFoundation;
 public class SceneLoadManager: MonoBehaviour
 {
     public void LoadFoodGame(){
-        
-        //Ensure ARSession is not destroyed between scenes
+        // Ensure ARSession is not destroyed between scenes
         DontDestroyOnLoad(FindObjectOfType<ARSession>());
 
         SceneManager.LoadScene("FoodGame");
     }
-
-    public void LoadInstructionsFoodGame(){
-        SceneManager.LoadScene("Game3Instructions");
-    }
-    
+    //---Depreciated from seperate Scene approach
+    // public void LoadValidationScene()
+    // {
+    //     SceneManager.LoadScene("ValidationStep");
+    // }
+    // public void LoadChargingScene()
+    // {
+    //     SceneManager.LoadScene("ChargingStep");
+    // }
+    // public void LoadQRHintScene()
+    // {
+    //     SceneManager.LoadScene("FinalQRStep");
+    // }
     
     
 }

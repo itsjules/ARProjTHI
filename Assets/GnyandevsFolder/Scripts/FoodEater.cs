@@ -1,4 +1,4 @@
-//Created by JulP
+//Created by GnyanP
 
 using System.Collections;
 using System.Collections.Generic;
@@ -7,17 +7,19 @@ using UnityEngine;
 public class FoodEater : MonoBehaviour
 {
 
-    private ParticleSystem FXateFood;
+    public GameObject foodEatenEffect; // Particle effect prefab
 
-    private void Start() {
-        FXateFood = transform.Find("AteFood")?.GetComponent<ParticleSystem>();
-    }
     void OnTriggerEnter(Collider collider)
     {
-        // Check if the object has the "food" tag
         if (collider.CompareTag("food"))
         {
-            // Determine if the food is healthy or unhealthy
+            // Play particle effect at the foods position
+            if (foodEatenEffect != null)
+            {
+                Instantiate(foodEatenEffect, collider.transform.position, Quaternion.identity);
+            }
+            
+            // Is food healthy or unhealthy for score
             string foodName = collider.gameObject.name;
             if (ScoreManager.Instance.IsHealthyFood(foodName))
             {
@@ -28,11 +30,13 @@ public class FoodEater : MonoBehaviour
                 ScoreManager.Instance.AddUnhealthyScore();
             }
 
-            //Play Particle effect if not null
-            FXateFood?.Play();
-
-            // Destroy the food object
             Destroy(collider.gameObject);
+
+            // Confirm food ate
+            Debug.Log($"Ate food: {foodName}");
+        }
+        else {
+            Debug.Log($"Ignored collision with: {collider.gameObject.name}");
         }
     }
 }

@@ -72,7 +72,9 @@ public class StepManager : MonoBehaviour
             UIController.Instance.ShowNextStepButton(() =>
             {
                 UIController.Instance.ShowLevelOverview();
+                
             });
+            yield break;
         }
         //the Rest of manual steps have a delay of the Button
         yield return new WaitForSeconds(delay);

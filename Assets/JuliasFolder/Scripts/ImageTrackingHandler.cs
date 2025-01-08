@@ -7,29 +7,18 @@ using System;
 
 public class ImageTrackingHandler : MonoBehaviour
 {
-    public static ImageTrackingHandler Instance { get; set; }
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    
-    
-    
     [SerializeField]
     private ARTrackedImageManager trackedImageManager;
 
-    private Dictionary<string, GameObject> instantiatedPrefabs = new Dictionary<string, GameObject>();
-
     [SerializeField]
     private List<ReferencePrefabMapping> referencePrefabMappings;
+
+    // [SerializeField]
+    // private TMP_Text headerText;
+
+    private Dictionary<string, GameObject> instantiatedPrefabs = new Dictionary<string, GameObject>();
+    // private List<string> imageOrder = new List<string>();
+    // private int nextImageIndex = 0;
 
     [Serializable]
     public struct ReferencePrefabMapping
@@ -39,7 +28,15 @@ public class ImageTrackingHandler : MonoBehaviour
         public Vector3 offset;
     }
 
-    private bool isCurrentStepImageProcessed = false;
+
+    // private void Awake()
+    // {
+    //     // Initialize the image order list
+    //     foreach (var mapping in referencePrefabMappings)
+    //     {
+    //         imageOrder.Add(mapping.imageName);
+    //     }
+    // }
 
     private void OnEnable()
     {
@@ -61,7 +58,6 @@ public class ImageTrackingHandler : MonoBehaviour
         foreach (var trackedImage in args.updated)
         {
             UpdatePrefabTransform(trackedImage);
-            ProcessStepImage(trackedImage);
         }
         foreach (var trackedImage in args.removed)
         {
@@ -71,7 +67,7 @@ public class ImageTrackingHandler : MonoBehaviour
 
     private void HandleTrackedImage(ARTrackedImage trackedImage)
     {
-        // // Ignore images that are not actively tracking (led to bugs bcs sometimes there are issues with tracking state of images on mobile build)
+        // // Ignore images that are not actively tracking 
         // if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking){
         //     return;
         // }
@@ -80,40 +76,32 @@ public class ImageTrackingHandler : MonoBehaviour
         if (instantiatedPrefabs.ContainsKey(trackedImage.referenceImage.name)){
             return;
         }
-        
         // Find the matching prefab mapping
         var mapping = referencePrefabMappings.Find(m => m.imageName == trackedImage.referenceImage.name);
 
+        // Debug.Log($"maping prefab = {mapping.prefab}");
 
         if (mapping.prefab != null)
         {
             Debug.Log(mapping.prefab);
-            
+            // Calculate position with offset
             Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
 
+            // Instantiate the prefab
             GameObject newPrefab = Instantiate(mapping.prefab, positionWithOffset, trackedImage.transform.rotation);
 
             // Store the instantiated prefab
             instantiatedPrefabs[trackedImage.referenceImage.name] = newPrefab;
 
-            //Deactivate Prefab if this is not the required image for the current step 
-            var currentStep = StepManager.Instance.GetCurrentStep();
-            if (currentStep == null || currentStep.trackingImageName != trackedImage.referenceImage.name)
-            {
-                newPrefab.SetActive(false);
-            }
+            // // Update header text
+            // UpdateHeaderText(trackedImage);
+
+            StepManager.Instance.OnImageTracked(trackedImage.referenceImage.name);
         }
     }
 
     private void UpdatePrefabTransform(ARTrackedImage trackedImage)
     {
-        //Skip if this is not the required image for the current step
-        var currentStep = StepManager.Instance.GetCurrentStep();
-        if (currentStep == null || currentStep.trackingImageName != trackedImage.referenceImage.name)
-        {
-            return;
-        }
-        
         // If we have an instantiated prefab for this image, update its transform
         if (instantiatedPrefabs.TryGetValue(trackedImage.referenceImage.name, out GameObject prefab))
         {
@@ -121,9 +109,8 @@ public class ImageTrackingHandler : MonoBehaviour
             var mapping = referencePrefabMappings.Find(m => m.imageName == trackedImage.referenceImage.name);
 
             prefab.transform.position = trackedImage.transform.position + mapping.offset;
-            prefab.transform.rotation = Quaternion.Slerp(prefab.transform.rotation, trackedImage.transform.rotation, Time.deltaTime * 0.5f);
+            prefab.transform.rotation = trackedImage.transform.rotation;
 
-            
             // Ensure prefab is visible when tracking
             prefab.SetActive(trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking);
         }
@@ -137,21 +124,20 @@ public class ImageTrackingHandler : MonoBehaviour
         }
     }
 
-    private void ProcessStepImage(ARTrackedImage trackedImage){
+    //old Approach when I changes headerText from here
+    // private void UpdateHeaderText(ARTrackedImage trackedImage)
+    // {
+    //     nextImageIndex++;
+        
 
-        var currentStep = StepManager.Instance.GetCurrentStep(); 
-        if (currentStep != null &&
-            currentStep.trackingImageName == trackedImage.referenceImage.name &&
-            !isCurrentStepImageProcessed)
-        {
-            isCurrentStepImageProcessed = true;
-
-            StepManager.Instance.OnImageTracked(trackedImage.referenceImage.name);
-        }
-    }
-
-    public void ResetProcessingState()
-    {
-        isCurrentStepImageProcessed = false;
-    }
+    //     if (nextImageIndex < imageOrder.Count)
+    //     {
+    //         string nextImageName = imageOrder[nextImageIndex];
+    //         headerText.text = $"You found the {trackedImage.referenceImage.name}, follow the instructions<br><i><size=70%>after that find the {nextImageName}</i></size>";
+    //     }
+    //     else
+    //     {
+    //         headerText.text = "All steps completed! Well done! <br>Now lets play a game";
+    //     }
+    // }
 }

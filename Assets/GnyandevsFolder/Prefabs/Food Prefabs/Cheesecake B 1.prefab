@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outOfBoundsY: 2
+  outOfBoundsZ: -5
 --- !u!114 &6457360391135098072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,3 +151,4 @@ MonoBehaviour:
   target: {fileID: 0}
   moveSpeed: 0.1
   testMode: 1
+  destroyAfterSeconds: 15

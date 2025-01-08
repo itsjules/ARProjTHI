@@ -6,18 +6,11 @@ using UnityEngine;
 
 public class FoodEater : MonoBehaviour
 {
-<<<<<<< HEAD
     private ParticleSystem FXateFood;
 
     private void Start() {
         FXateFood = transform.Find("AteFood")?.GetComponent<ParticleSystem>();
     }
-=======
-
-    public GameObject foodEatenEffect; // Particle effect prefab
-
-
->>>>>>> origin/main
     void OnTriggerEnter(Collider collider)
     {
         // Check if the object has the "food" tag

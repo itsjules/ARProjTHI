@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FoodEater : MonoBehaviour
 {
+
     public GameObject foodEatenEffect; // Particle effect prefab
+
 
     void OnTriggerEnter(Collider collider)
     {
@@ -27,6 +29,9 @@ public class FoodEater : MonoBehaviour
             {
                 ScoreManager.Instance.AddUnhealthyScore();
             }
+
+            //Play Particle effect if not null
+            FXateFood?.Play();
 
             // Destroy the food object
             Destroy(collider.gameObject);

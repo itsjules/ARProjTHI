@@ -23,6 +23,15 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private GameObject nextStepButton;
 
+    [SerializeField]
+    private GameObject ARManualUI;
+    [SerializeField]
+    private GameObject Canvas_leveloverview03;
+    [SerializeField]
+    private GameObject Canvas_InstructionsGame3;
+
+    
+
     public void ShowInstruction(Sprite image)
     {
         instructionImage.sprite = image;
@@ -45,4 +54,17 @@ public class UIController : MonoBehaviour
         nextStepButton.GetComponent<Button>().onClick.RemoveAllListeners();
         nextStepButton.GetComponent<Button>().onClick.AddListener(onClickAction);
     }
+
+    //Disable Manual UI and show Level overview for Food Game
+    public void ShowLevelOverview(){
+        ARManualUI.SetActive(false);
+        Canvas_leveloverview03.SetActive(true);
+    }
+
+    public void ShowGame3Instruction(){
+        Canvas_leveloverview03.SetActive(false);
+        Canvas_InstructionsGame3.SetActive(true);
+    }
+
+
 }

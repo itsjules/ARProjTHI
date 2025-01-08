@@ -1,5 +1,8 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
+
 
 public class ScoreManager : MonoBehaviour
 {
@@ -9,9 +12,10 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text unhealthyScoreText;
     public TMP_Text timerText;
     public TMP_Text resultText; // Display result after game ends
-
     public float gameDuration = 60f; // 60-second timer
     private float timer;
+    [SerializeField]
+    private  GameObject continueBttn; // Button to end the game and switch to endscene
 
     public static ScoreManager Instance;
 
@@ -112,5 +116,9 @@ public class ScoreManager : MonoBehaviour
 
         // Debug log for verification
         Debug.Log(resultMessage);
+
+        continueBttn.SetActive(true);
     }
+
+    
 }

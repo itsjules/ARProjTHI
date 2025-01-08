@@ -3,42 +3,31 @@ using UnityEngine.XR.ARFoundation;
 
 public class FoodFall : MonoBehaviour
 {
-    public Transform target; // Transform of the user's face (tracked via ARFaceManager or set in editor)
-    public float moveSpeed = 0.1f; // Speed at which the food moves
-    public bool testMode = false; // Enable test mode for Unity editor testing
-    public float destroyAfterSeconds = 15f; // Time after which the food item is destroyed
+    private Vector3 targetPosition;
+    private float moveSpeed;
 
-    void Start()
+    private ParticleSystem FXfoodMissed;
+
+    public void Initialize(Vector3 target, float speed)
     {
-        // Schedule destruction after the specified time
-        Destroy(gameObject, destroyAfterSeconds);
+        targetPosition = target;
+        moveSpeed = speed;
+        FXfoodMissed = transform.Find("MissedFood")?.GetComponent<ParticleSystem>();
     }
+
+    
 
     void Update()
     {
-        if (testMode)
-        {
-            // Test target position: 1.5 meters in front of the AR Camera
-            Vector3 testTargetPos = new Vector3(
-                Camera.main.transform.position.x,
-                Camera.main.transform.position.y,
-                Camera.main.transform.position.z + 1.5f
-            );
+        // Move toward the target position
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            // Test food moving
-            transform.position = Vector3.MoveTowards(transform.position, testTargetPos, moveSpeed * Time.deltaTime);
-        }
-        else if (target != null)
-        {
-            // Make the food face the target
-            transform.LookAt(target);
-
-            // Move food toward the actual target
-            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
-        }
-        else
-        {
-            Debug.LogWarning("No target detected. Food cannot move towards the target.");
+        // Destroy the object if it reaches the target before its eaten
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+        {   
+            FXfoodMissed?.Play();
+            
+            Destroy(gameObject);
         }
     }
 }

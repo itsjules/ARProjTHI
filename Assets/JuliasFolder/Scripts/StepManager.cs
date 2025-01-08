@@ -2,11 +2,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class StepManager : MonoBehaviour
 {
     public static StepManager Instance { get; private set; }
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -30,8 +31,17 @@ public class StepManager : MonoBehaviour
     [SerializeField]
     private List<Step> steps;
 
-    private StepType currentStep = StepType.PrintKiosk;
+    public StepType currentStep = StepType.PrintKiosk;
 
+    public ParticleEffectSpawner particleEffectSpawner;
+
+    
+
+    public Step GetCurrentStep()
+    {
+        return steps.Find(s => s.stepType == currentStep);
+    }
+    
     public void LoadStep(StepType stepType)
     {
         currentStep = stepType;
@@ -39,24 +49,35 @@ public class StepManager : MonoBehaviour
         if (step != null)
         {
             UIController.Instance.ShowInstruction(step.instructionImage);
+            ImageTrackingHandler.Instance.ResetProcessingState();
         }
     }
-    
-    public void OnImageTracked(string imageName)
+
+    public void OnImageTracked(string trackingImageName)
     {
         var step = steps.Find(s => s.stepType == currentStep);
-        if (step != null && step.imageName == imageName)
+        if (step != null && step.trackingImageName == trackingImageName)
         {
             UIController.Instance.HideInstruction();
             StartCoroutine(CompleteStepAfterDelay(5f));
         }
     }
 
-    
+
     private IEnumerator CompleteStepAfterDelay(float delay)
     {
+        //Show Button directly after capturing finalQR Code
+        if (currentStep == StepType.finalQR)
+        {
+            UIController.Instance.ShowNextStepButton(() =>
+            {
+                UIController.Instance.ShowLevelOverview();
+            });
+        }
+        //the Rest of manual steps have a delay of the Button
         yield return new WaitForSeconds(delay);
-        UIController.Instance.ShowNextStepButton(() => {
+        UIController.Instance.ShowNextStepButton(() =>
+        {
             if (currentStep == StepType.PrintKiosk)
             {
                 LoadStep(StepType.ValidationKiosk);
@@ -68,10 +89,11 @@ public class StepManager : MonoBehaviour
             else if (currentStep == StepType.MoneyKiosk)
             {
                 LoadStep(StepType.finalQR);
+                particleEffectSpawner.SpawnEffect("Confetti");
             }
             else
             {
-                Debug.Log("No Next Step");
+                Debug.LogError("No action possible");
             }
         });
     }
@@ -86,6 +108,6 @@ public class StepManager : MonoBehaviour
 public class Step
 {
     public StepManager.StepType stepType;
-    public string imageName;
+    public string trackingImageName;
     public Sprite instructionImage;
 }

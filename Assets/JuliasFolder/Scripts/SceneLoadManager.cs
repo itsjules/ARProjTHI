@@ -7,13 +7,15 @@ public class SceneLoadManager: MonoBehaviour
 {
     public void LoadFoodGame(){
         
-        //Ensure ARSession is not destroyed between scenes
-        DontDestroyOnLoad(FindObjectOfType<ARSession>());
+        // //Ensure ARSession is not destroyed between scenes
+        // DontDestroyOnLoad(FindObjectOfType<ARSession>());
 
         SceneManager.LoadScene("FoodGame");
     }
 
     public void LoadInstructionsFoodGame(){
+        // //Ensure ARSession is not destroyed between scenes
+        // DontDestroyOnLoad(FindObjectOfType<ARSession>());
         SceneManager.LoadScene("Game3Instructions");
     }
     

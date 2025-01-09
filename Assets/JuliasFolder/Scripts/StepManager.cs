@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.ARFoundation;
 
 public class StepManager : MonoBehaviour
 {
@@ -71,7 +72,13 @@ public class StepManager : MonoBehaviour
         {
             UIController.Instance.ShowNextStepButton(() =>
             {
-                // UIController.Instance.ShowLevelOverview();
+                ARSession arSession = FindObjectOfType<ARSession>();
+                Debug.Log($"found AR Sessions {arSession}");
+                if (arSession != null)
+                {
+                    arSession.Reset();  // Stop the current AR session
+                    Debug.Log("reset ARSession");
+                }
                 SceneManager.LoadScene("Game3Instructions");
                 
             });

@@ -8,7 +8,7 @@ public class StickerDownload : MonoBehaviour
 
     private void Start()
     {
-        // Button-Click-Event hinzufügen
+        // Button-Click-Event hinzufï¿½gen
         if (downloadButton != null)
         {
             downloadButton.onClick.AddListener(DownloadSticker);
@@ -30,10 +30,10 @@ public class StickerDownload : MonoBehaviour
             // Datei kopieren
             File.Copy(sourcePath, destinationPath, true);
 
-            // Debug-Nachricht für den Nutzer
+            // Debug-Nachricht fï¿½r den Nutzer
             UnityEngine.Debug.Log($"Sticker wurde heruntergeladen: {destinationPath}");
 
-            // Optional: Öffne den Ordner (plattformabhängig)
+            // Optional: ï¿½ffne den Ordner (plattformabhï¿½ngig)
 #if UNITY_EDITOR
             UnityEngine.Application.OpenURL("file://" + destinationPath);
 #elif UNITY_ANDROID || UNITY_IOS

@@ -19,7 +19,14 @@ public class FoodSpawner : MonoBehaviour
 
     void Start()
     {
+        ARSession arSession = FindObjectOfType<ARSession>();
+        if (arSession != null)
+        {
+            arSession.enabled = true;
+        }
+
         mainCamera = Camera.main;
+        Debug.Log($"main camera found {mainCamera}");
         if (mainCamera == null)
         {
             // Reassign the camera if it's missing

@@ -41,7 +41,7 @@ public class UIController : MonoBehaviour
 
     public void HideInstruction()
     {   
-        Debug.Log("set InstructionImage false");
+        // Debug.Log("set InstructionImage false");
         //need to trigger slide out here, otherwise it gets disabled before coroutine even start
         instructionImage.GetComponent<SlideInOutAnimation>().StartSlideOut();
 

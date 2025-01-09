@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: GJP
-  productName: Part1_QuizNManual
+  productName: ARProj
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -165,7 +165,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.unity.quizNmanual
+    Android: com.unity.fullgame
     Standalone: com.GJP.ARProjTHI
     iPhone: com.unity.template.armobile
   buildNumber:
@@ -922,7 +922,10 @@ PlayerSettings:
   windowsGamepadBackendHint: 0
   cloudProjectId: c57b1c09-666d-44dd-91bd-50392be9c448
   framebufferDepthMemorylessMode: 0
-  qualitySettingsNames: []
+  qualitySettingsNames:
+  - Performant
+  - Balanced
+  - High Fidelity
   projectName: ARProjTHI 2024-10-30_19-35-16
   organizationId: itisjules
   cloudEnabled: 0

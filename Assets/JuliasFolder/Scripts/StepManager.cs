@@ -79,7 +79,7 @@ public class StepManager : MonoBehaviour
                     arSession.Reset();  // Stop the current AR session
                     Debug.Log("reset ARSession");
                 }
-                SceneManager.LoadScene("Game3Instructions");
+                SceneManager.LoadScene("Game3Instructions", LoadSceneMode.Single);
                 
             });
             

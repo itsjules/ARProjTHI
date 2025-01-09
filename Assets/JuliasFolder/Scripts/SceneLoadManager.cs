@@ -19,7 +19,7 @@ public class SceneLoadManager: MonoBehaviour
             Debug.Log("reset ARSession");
         }
 
-        SceneManager.LoadScene("FoodGame");
+        SceneManager.LoadScene("FoodGame", LoadSceneMode.Single);
     }
 
     public void LoadInstructionsFoodGame(){

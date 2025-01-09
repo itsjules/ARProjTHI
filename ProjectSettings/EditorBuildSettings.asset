@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/JuliasFolder/TryImgTrackScene2.unity
     guid: e9c6835ef6341444e924e2e941a7c61b
   - enabled: 1
+    path: Assets/JuliasFolder/Game3Instructions.unity
+    guid: 9ea7c2ec3b98cf742b350299ade9ad84
+  - enabled: 1
     path: Assets/GnyandevsFolder/FoodGame.unity
     guid: e2905d1f7de283f49bd4c4295b185ca3
   - enabled: 1

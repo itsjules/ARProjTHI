@@ -20,6 +20,11 @@ public class FoodSpawner : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            // Reassign the camera if it's missing
+            mainCamera = FindObjectOfType<Camera>();
+        }
 
         // Start spawning food at regular intervals
         StartCoroutine(SpawnFoodCoroutine());

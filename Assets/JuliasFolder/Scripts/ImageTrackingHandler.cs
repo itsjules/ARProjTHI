@@ -87,7 +87,7 @@ public class ImageTrackingHandler : MonoBehaviour
 
         if (mapping.prefab != null)
         {
-            Debug.Log(mapping.prefab);
+            //Debug.Log(mapping.prefab);
             
             Vector3 positionWithOffset = trackedImage.transform.position + mapping.offset;
 

@@ -2,11 +2,17 @@
  
 - Unity Version 2022.3.20f1
 - ARFoundation 5.1.4
-- *Soon Vuforia Engine*
 
-### Rules
-- Fetch main and branch off to do own stuff :) if its finished and everything ok, merge and update main
-- For now everyone has their own folder in `Assets/...` to do their stuff. If you want to change/extend global project Prefabs or Scripts, pls duplicate them in to your own folder first
-- lets do naming convention of braches later when first structure is established
+### Scene Structure for Build
+0: StephansFolder/StartScene
+1: StephansFolder/StartAR
+2: StephansFolder/Introduction
+3: JuliasFolder/TryImgTrackScene2
+4: JuliasFolder/Game3Instructions
+5: GnyandevsFolder/FoodGame
+6: StephansFolder/EndScene
 
-Guys, we got this ✨💪
+### Side Notes
+The AR ImageDetection in StephansFolder/StartAR is not working in the Unity Editor, just in the Mobile Build. So for a quick runthrough in the Editor you can start from the Scene StepahsnFolder/Introduction.
+
+

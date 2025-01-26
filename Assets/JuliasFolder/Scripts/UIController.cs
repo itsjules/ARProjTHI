@@ -1,4 +1,5 @@
 //Created by JulP
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -67,9 +68,18 @@ public class UIController : MonoBehaviour
         instructionImage.gameObject.SetActive(false);
     }
 
-    public void ShowNextStepButton(UnityEngine.Events.UnityAction onClickAction)
+    public void ShowNextStepButton(UnityEngine.Events.UnityAction onClickAction, StepManager.StepType currentStep)
     {
         nextStepButton.SetActive(true);
+
+        if(currentStep==StepManager.StepType.finalQR){
+            Transform textChild = nextStepButton.transform.Find("Text");
+            TMP_Text tmpText = textChild.GetComponent<TMP_Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = "Continue";
+            }
+        }
         nextStepButton.GetComponent<Button>().onClick.RemoveAllListeners();
         nextStepButton.GetComponent<Button>().onClick.AddListener(onClickAction);
     }

@@ -82,7 +82,7 @@ public class StepManager : MonoBehaviour
                 }
                 SceneManager.LoadScene("Game3Instructions", LoadSceneMode.Single);
                 
-            });
+            }, currentStep);
             
             yield break;
         }
@@ -107,7 +107,7 @@ public class StepManager : MonoBehaviour
             {
                 Debug.LogError("No action possible");
             }
-        });
+        },currentStep);
     }
 
     private void Start()

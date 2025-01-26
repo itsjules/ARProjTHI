@@ -1,3 +1,4 @@
+//Created by JulP
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,7 @@ public class SceneLoadManager: MonoBehaviour
 {
     public void LoadFoodGame(){
         
-        // //Ensure ARSession is not destroyed between scenes
-        // DontDestroyOnLoad(FindObjectOfType<ARSession>());
+     
 
         // Find the active AR session in the scene
         ARSession arSession = FindObjectOfType<ARSession>();
@@ -22,21 +22,7 @@ public class SceneLoadManager: MonoBehaviour
         SceneManager.LoadScene("FoodGame", LoadSceneMode.Single);
     }
 
-    public void LoadInstructionsFoodGame(){
-        // //Ensure ARSession is not destroyed between scenes
-        // DontDestroyOnLoad(FindObjectOfType<ARSession>());
-
-        // Find the active AR session in the scene
-        ARSession arSession = FindObjectOfType<ARSession>();
-        Debug.Log($"found AR Sessions {arSession}");
-        if (arSession != null)
-        {
-            arSession.Reset();  // Stop the current AR session
-            Debug.Log("reset ARSession");
-        }
-
-        SceneManager.LoadScene("Game3Instructions");
-    }
+    
     
     
     

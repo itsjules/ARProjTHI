@@ -1,3 +1,6 @@
+//Created by JulP
+// Tailored Child ImageSpawner subscribed to TrackedImageManger events
+
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.SceneManagement;

@@ -1,4 +1,4 @@
-// StepManager.cs
+// Created by JulP
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +50,7 @@ public class StepManager : MonoBehaviour
         if (step != null)
         {
             UIController.Instance.ShowInstruction(step.instructionImage);
+            UIController.Instance.UpdateStepIndicatorPanel(stepType);
             ImageTrackingHandler.Instance.ResetProcessingState();
         }
     }

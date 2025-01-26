@@ -1,13 +1,13 @@
-//Created by JulP
+
 using UnityEngine;
 using System.Collections;
 
 public class SlideInOutAnimation : MonoBehaviour
 {
-    public RectTransform targetUI; // Das UI-Element, das animiert werden soll
-    public Vector2 offScreenPosition; // Position außerhalb des Bildschirms
-    public Vector2 onScreenPosition; // Zielposition im Canvas
-    public float duration = 0.8f; // Dauer der Animation in Sekunden
+    public RectTransform targetUI; 
+    public Vector2 offScreenPosition; 
+    public Vector2 onScreenPosition; 
+    public float duration = 0.8f; 
 
     private Coroutine currentCoroutine;
 

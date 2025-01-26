@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 
@@ -12,7 +13,17 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text healthyScoreText;
     public TMP_Text unhealthyScoreText;
     public TMP_Text timerText;
-    public TMP_Text resultText; // Display result after game ends
+    // public TMP_Text resultText; // Display result after game ends
+
+    [SerializeField]
+    private GameObject ResultImage; // Pick and Display result image after game ends
+
+    [SerializeField]
+    public Sprite resultHealthyDietSprite;
+
+    [SerializeField]
+    public Sprite resultUnhealthyDietSprite;
+
     public float gameDuration = 60f; // 60-second timer
     private float timer;
     [SerializeField]
@@ -23,6 +34,8 @@ public class ScoreManager : MonoBehaviour
     // Food categorization
     private readonly string[] healthyFoods = { "Curry plate 1", "Peach 1", "Udon 1" };
     private readonly string[] unhealthyFoods = { "Cheesecake B 1", "Hotdog A 1", "Pizza Margarita Slice 1" };
+
+    
 
     void Awake()
     {
@@ -49,7 +62,7 @@ public class ScoreManager : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            timerText.text = $"Time: {Mathf.CeilToInt(timer)}s";
+            timerText.text = $"{Mathf.CeilToInt(timer)}s";
         }
         else
         {
@@ -61,7 +74,8 @@ public class ScoreManager : MonoBehaviour
     {
         healthyScore = 0;
         unhealthyScore = 0;
-        resultText.text = ""; // Clear previous result text
+        // resultText.text = ""; // Clear previous result text
+        ResultImage.SetActive(false); //Clear result Image
         UpdateScoreTexts();
     }
 
@@ -113,7 +127,15 @@ public class ScoreManager : MonoBehaviour
             : "Oopsie Daisy, you might want to improve your diet champ.";
 
         // Display result
-        resultText.text = resultMessage;
+        // resultText.text = resultMessage;
+        ResultImage.SetActive(true);
+        
+        if(isHealthyDiet){
+            ResultImage.GetComponent<Image>().sprite=resultHealthyDietSprite;
+        }
+        else if(!isHealthyDiet){
+            ResultImage.GetComponent<Image>().sprite=resultUnhealthyDietSprite;
+        }
 
         // Debug log for verification
         Debug.Log(resultMessage);

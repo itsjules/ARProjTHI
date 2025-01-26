@@ -62,6 +62,7 @@ public class FoodSpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomEdgeSpawnPosition();
 
         // Instantiate a random food prefab at the spawn position
+        // POSSIBLE IMPROVEMTS: Make a balanced resource generation algorithm, so ´healthy and unhealthy food spawn is more balanced
         GameObject food = Instantiate(
             foodItems[Random.Range(0, foodItems.Length)],
             spawnPosition,

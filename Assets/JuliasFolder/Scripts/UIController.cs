@@ -86,7 +86,7 @@ public class UIController : MonoBehaviour
         Canvas_InstructionsGame3.SetActive(true);
     }
 
-    //Update StepIndicatorPanel Images
+    //Update StepIndicatorPanel Images (quickNdirty)
     public void UpdateStepIndicatorPanel(StepManager.StepType currentStep){
         Image PrintStepImage= StepIndicatorPanel.transform.Find("Print/Image").gameObject.GetComponent<Image>();
         Image ValidateStepImage= StepIndicatorPanel.transform.Find("Validation/Image").gameObject.GetComponent<Image>();

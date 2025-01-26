@@ -23,14 +23,19 @@ public class StickerDownload : MonoBehaviour
         // Absoluter Pfad zur Datei im StreamingAssets-Ordner
         string sourcePath = Path.Combine(UnityEngine.Application.dataPath, "Stephansfolder/StreamingAssets", fileName);
 
+// #if UNITY_ANDROID
+//         // Zielpfad zum Android Downloads-Verzeichnis
+//         string destinationPath = Path.Combine("/storage/emulated/0/Download", fileName);
+
+// #elif UNITY_EDITOR
         // Zielpfad im lokalen Downloads-Verzeichnis
         string destinationPath = Path.Combine(UnityEngine.Application.persistentDataPath, fileName);
+// #endif
 
          StartCoroutine(CopyFileFromStreamingAssets(sourcePath, destinationPath));
 
     }
 
-    //createdby JulP
     private System.Collections.IEnumerator CopyFileFromStreamingAssets(string sourcePath, string destinationPath)
     {
         UnityWebRequest request = UnityWebRequest.Get(sourcePath);
@@ -51,7 +56,7 @@ public class StickerDownload : MonoBehaviour
                 // Optional: Öffne den Ordner (plattformabhängig)
 #if UNITY_EDITOR
                 Application.OpenURL("file://" + destinationPath);
-#elif UNITY_ANDROID || UNITY_IOS
+#elif UNITY_ANDROID 
                 Application.OpenURL(destinationPath);
 #endif
             }

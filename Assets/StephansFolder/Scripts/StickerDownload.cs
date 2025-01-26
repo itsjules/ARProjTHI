@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Networking;
 
 public class StickerDownload : MonoBehaviour
 {
@@ -25,24 +26,43 @@ public class StickerDownload : MonoBehaviour
         // Zielpfad im lokalen Downloads-Verzeichnis
         string destinationPath = Path.Combine(UnityEngine.Application.persistentDataPath, fileName);
 
-        if (File.Exists(sourcePath))
+         StartCoroutine(CopyFileFromStreamingAssets(sourcePath, destinationPath));
+
+    }
+
+    //createdby JulP
+    private System.Collections.IEnumerator CopyFileFromStreamingAssets(string sourcePath, string destinationPath)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(sourcePath);
+
+        // Datei laden
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
         {
-            // Datei kopieren
-            File.Copy(sourcePath, destinationPath, true);
+            try
+            {
+                // Datei im Zielverzeichnis speichern
+                File.WriteAllBytes(destinationPath, request.downloadHandler.data);
 
-            // Debug-Nachricht f�r den Nutzer
-            UnityEngine.Debug.Log($"Sticker wurde heruntergeladen: {destinationPath}");
+                // Debug-Nachricht für den Nutzer
+                Debug.Log($"Sticker was downlaoded: {destinationPath}");
 
-            // Optional: �ffne den Ordner (plattformabh�ngig)
+                // Optional: Öffne den Ordner (plattformabhängig)
 #if UNITY_EDITOR
-            UnityEngine.Application.OpenURL("file://" + destinationPath);
+                Application.OpenURL("file://" + destinationPath);
 #elif UNITY_ANDROID || UNITY_IOS
-            UnityEngine.Application.OpenURL(destinationPath);
+                Application.OpenURL(destinationPath);
 #endif
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Error with saving Sticker: " + ex.Message);
+            }
         }
         else
         {
-            UnityEngine.Debug.LogError("Die Datei konnte nicht gefunden werden: " + sourcePath);
+            Debug.LogError("Sticker couldn't be loaded: " + request.error);
         }
     }
 }

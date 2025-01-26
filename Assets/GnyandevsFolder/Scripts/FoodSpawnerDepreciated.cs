@@ -1,9 +1,9 @@
-// //Created by JulP
+// //Created by JulP (for 2D falling approach)
 
 // using UnityEngine;
 // using System.Collections;
 
-// public class FoodSpawnerNew : MonoBehaviour
+// public class FoodSpawnerDepreciated : MonoBehaviour
 // {
 //     public GameObject[] foodPrefabs; // Array to hold multiple food prefabs
 //     public float spawnDepth = 1.5f; // Depth before the camera for food to spawn
